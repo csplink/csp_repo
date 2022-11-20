@@ -20,6 +20,7 @@
 
 set_xmakever("2.7.2")
 
-set_description("The official package repository of csplink")
-
-includes("manager/xmake.lua")
+for _, dir in ipairs(os.dirs("/*")) do
+    file = dir .. "/xmake.lua"
+    if os.exists(file) then includes(file) end
+end
