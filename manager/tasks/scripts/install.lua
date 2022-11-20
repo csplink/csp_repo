@@ -74,7 +74,7 @@ function add_hal(target)
     end
 
     -- use semver to parse version
-    local configuration = json.loadfile(scriptdir .. "/../../../packages/hal/" .. hal .. ".json")
+    local configuration = json.loadfile(scriptdir .. "/../../../packages/hal/" .. hal .. "/config.json")
     local versions = configuration["versions"]
     version, source = semver.select(version, versions)
     print("use hal: '%s' version: '%s'", hal, version)
