@@ -15,7 +15,7 @@
 -- Copyright (C) 2022-present xqyjlj<xqyjlj@126.com>, csplink.github.io
 --
 -- @author      xqyjlj
--- @file        pkgs.lua
+-- @file        csp.lua
 --
 
 set_xmakever("2.7.2")

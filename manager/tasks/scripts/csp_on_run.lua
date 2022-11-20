@@ -15,7 +15,7 @@
 -- Copyright (C) 2022-present xqyjlj<xqyjlj@126.com>, csplink.github.io
 --
 -- @author      xqyjlj
--- @file        init_on_run.lua
+-- @file        csp_on_run.lua
 --
 
 import("core.project.project")
