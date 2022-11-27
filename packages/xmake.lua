@@ -22,5 +22,7 @@ set_xmakever("2.7.2")
 
 for _, dir in ipairs(os.dirs("/*")) do
     file = dir .. "/xmake.lua"
-    if os.exists(file) then includes(file) end
+    if os.exists(file) then
+        includes(file)
+    end
 end
