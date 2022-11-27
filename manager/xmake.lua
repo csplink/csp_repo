@@ -24,9 +24,10 @@ if is_mode("debug") then
     add_defines("DEBUG")
 end
 
-for _, file in ipairs(os.files("tasks/*.lua")) do
-    includes(file)
-end
+includes("rules.lua")
+includes("tasks.lua")
+
+add_moduledirs(path.absolute(os.scriptdir()) .. "/modules")
 
 local build_xmake_path = path.absolute(os.projectdir() .. "/build/xmake.lua")
 if has_config("buildir") then
