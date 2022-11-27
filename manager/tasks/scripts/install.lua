@@ -124,6 +124,17 @@ function add_target(target, name)
         print("add target deps: %s", targets[index])
     end
     -- end
+    table.insert(
+        build_xmake,
+        [[
+    after_clean(
+        function(target)
+            os.tryrm("build/.deps")
+            os.tryrm("build/.gens")
+            os.tryrm("build/.objs")
+        end
+    )]]
+    )
     table.insert(build_xmake, "end")
     table.insert(build_xmake, "target_end()")
     table.insert(build_xmake, "")
