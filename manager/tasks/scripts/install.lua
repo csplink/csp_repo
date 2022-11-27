@@ -26,6 +26,7 @@ import("core.base.json")
 local build_xmake = {}
 local targets = {}
 local rules = {}
+local options = {}
 local projectdir = path.absolute(os.projectdir())
 local scriptdir = path.absolute(os.scriptdir())
 local buildir = projectdir .. "/build"
@@ -37,7 +38,7 @@ function create_build_xmake(target)
     table.insert(build_xmake, data)
     update_build_xmake(target)
     data = table.concat(build_xmake, "\n") .. "\n"
-    print("create %s", build_xmake_path)
+    print("generate %s", build_xmake_path)
     io.writefile(build_xmake_path, data)
 end
 
@@ -45,6 +46,7 @@ function update_build_xmake(target)
     add_import(target)
     add_target(target, "csp_target")
     add_rule(target, "csp_rule")
+    add_option(target, "csp_option")
 end
 
 function add_import(target)
@@ -83,7 +85,8 @@ function add_hal(target)
     table.insert(targets, configuration["target"])
     -- insert hal`s rule
     table.insert(rules, configuration["rule"])
-
+    -- insert hal`s option
+    table.insert(options, configuration["option"])
     -- check hal_path
     local haldir = target:values("haldir")
     local hal_path
@@ -94,6 +97,7 @@ function add_hal(target)
     end
 
     -- insert "includes("/home/csplink/git/github/csplink/csp_hal_apm32f1/examples/get-started/hello_world/../../../package.lua")"
+    table.insert(build_xmake, "-- hal_package")
     hal_path = string.format(hal_path, hal, version)
     local includes = string.format('includes("%s/package.lua")', hal_path)
     table.insert(build_xmake, includes)
@@ -101,38 +105,73 @@ function add_hal(target)
     -- insert "includes("/home/csplink/git/github/csplink/csp_hal_apm32f1/examples/get-started/hello_world/../../../tools/xmake/toolchains/arm-none-eabi.lua"))"
     local toolchain = target:values("toolchain")
     if toolchain then
+        table.insert(build_xmake, "-- toolchain")
         local includes = string.format('includes("%s/tools/xmake/toolchains/%s.lua")', hal_path, toolchain)
         table.insert(build_xmake, includes)
+        table.insert(build_xmake, "")
     end
 end
 
 function add_target(target, name)
     table.insert(build_xmake, "")
+    table.insert(build_xmake, "-- this target is a collection of library targets")
     table.insert(build_xmake, string.format('target("%s")', name))
     table.insert(build_xmake, "do")
-    table.insert(build_xmake, '    set_kind("static")')
+    table.insert(build_xmake, '    set_kind("object")')
     -- start
-    for _, k in pairs(targets) do
-        table.insert(build_xmake, string.format('    add_deps("%s")', k))
-        print("add target deps: %s", k)
+    for index in pairs(table.orderkeys(targets)) do
+        table.insert(build_xmake, string.format('    add_deps("%s")', targets[index]))
+        print("add target deps: %s", targets[index])
     end
     -- end
     table.insert(build_xmake, "end")
     table.insert(build_xmake, "target_end()")
+    table.insert(build_xmake, "")
 end
 
 function add_rule(target, name)
     table.insert(build_xmake, "")
+    table.insert(build_xmake, "-- this rule is a collection of library rules")
     table.insert(build_xmake, string.format('rule("%s")', name))
     table.insert(build_xmake, "do")
     -- start
-    for _, k in pairs(rules) do
-        table.insert(build_xmake, string.format('    add_deps("%s")', k))
-        print("add rule deps: %s", k)
+    for index in pairs(table.orderkeys(rules)) do
+        table.insert(build_xmake, string.format('    add_deps("%s")', rules[index]))
+        print("add rule deps: %s", rules[index])
     end
     -- end
     table.insert(build_xmake, "end")
     table.insert(build_xmake, "rule_end()")
+    table.insert(build_xmake, "")
+end
+
+function add_option(target, name)
+    table.insert(build_xmake, "")
+    table.insert(build_xmake, "-- this option is a collection of library options")
+    table.insert(build_xmake, string.format('option("%s")', name))
+    table.insert(build_xmake, "do")
+    table.insert(build_xmake, "    set_default(true)")
+    table.insert(build_xmake, "    set_showmenu(false)")
+    -- start
+    for index in pairs(table.orderkeys(options)) do
+        table.insert(build_xmake, string.format('    add_deps("%s")', options[index]))
+        print("add option deps: %s", options[index])
+    end
+    -- end
+    table.insert(
+        build_xmake,
+        [[
+    after_check(
+        function(option)
+            for _, dep_opt in pairs(option:orderdeps()) do
+                option:add("defines", dep_opt:get("defines"))
+            end
+        end
+    )]]
+    )
+    table.insert(build_xmake, "end")
+    table.insert(build_xmake, "option_end()")
+    table.insert(build_xmake, "")
 end
 
 function main(target)
