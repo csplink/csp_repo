@@ -63,7 +63,7 @@ function add_hal(target)
     )
 
     -- get original "hal" "version"
-    local hal_array = hal_value:split("|")
+    local hal_array = hal_value:split("@")
     local hal = ""
     local version = "latest" -- default latest
     if #hal_array == 1 then -- set_values("hal", "csp_hal_apm32f1")
