@@ -27,8 +27,8 @@ local build_xmake = {}
 local targets = {}
 local rules = {}
 local options = {}
-local projectdir = path.absolute(os.projectdir())
-local scriptdir = path.absolute(os.scriptdir())
+local projectdir = string.gsub(path.absolute(os.projectdir()), "\\", "/")
+local scriptdir = string.gsub(path.absolute(os.scriptdir()), "\\", "/")
 local buildir = projectdir .. "/build"
 
 function create_build_xmake(target)
@@ -96,6 +96,7 @@ function add_hal(target)
         hal_path = scriptdir .. "/../../../repositories/hal/%s/%s"
     end
 
+    hal_path = string.gsub(hal_path, "\\", "/")
     -- insert "includes("/home/csplink/git/github/csplink/csp_hal_apm32f1/examples/get-started/hello_world/../../../package.lua")"
     table.insert(build_xmake, "-- hal_package")
     hal_path = string.format(hal_path, hal, version)
