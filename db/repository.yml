@@ -1,0 +1,71 @@
+STMicroelectronics:
+  STM32F0:
+    STM32F0x0:
+      STM32F030C6T6:
+        Package: "LQFP48"
+        Core: "Arm Cortex-M0"
+        Frequency: 48
+        Ram: 4
+        Flash: 32
+        IO: 39
+        Voltage: { Max: 3.6, Min: 2.4 }
+        Current: { Lowest: 3.4, Run: 250.0 }
+        Temperature: { Max: 85.0, Min: -40.0 }
+        Peripherals:
+          - { Type: "ADC 12-bit", Count: 10 }
+          - { Type: "I2C", Count: 1 }
+          - { Type: "IRTIM", Count: 1 }
+          - { Type: "RTC", Count: 1 }
+          - { Type: "SPI", Count: 1 }
+          - { Type: "Timer 16-bit", Count: 5 }
+          - { Type: "USART", Count: 1 }
+  STM32F4:
+    STM32F401:
+      STM32F401RET6:
+        Package: "LQFP64"
+        Core: "Arm Cortex-M4"
+        Frequency: 84
+        Ram: 96
+        Flash: 512
+        IO: 50
+        Voltage: { Max: 3.6, Min: 1.7 }
+        Current: { Lowest: 1.8, Run: 137.0 }
+        Temperature: { Max: 105.0, Min: -40.0 }
+        Peripherals:
+          - { Type: "ADC 12-bit", Count: 16 }
+          - { Type: "I2C", Count: 3 }
+          - { Type: "I2S", Count: 2 }
+          - { Type: "RTC", Count: 1 }
+          - { Type: "SDIO", Count: 1 }
+          - { Type: "SPI", Count: 3 }
+          - { Type: "Timer 16-bit", Count: 6 }
+          - { Type: "Timer 32-bit", Count: 2 }
+          - { Type: "USART", Count: 3 }
+          - { Type: "USB OTG_FS", Count: 1 }
+Geehy:
+  APM32F1:
+    APM32F103:
+      APM32F103ZET6:
+        Package: "LQFP144"
+        Core: "Arm Cortex-M3"
+        Frequency: 96
+        Ram: 128
+        Flash: 512
+        IO: 112
+        Voltage: { Max: 3.6, Min: 2.0 }
+        Current: { Lowest: 1.9, Run: 421.0 }
+        Temperature: { Max: 105.0, Min: -40.0 }
+        Peripherals:
+          - { Type: "ADC 12-bit", Count: 21 }
+          - { Type: "CAN", Count: 1 }
+          - { Type: "DAC 12-bit", Count: 2 }
+          - { Type: "FSMC", Count: 1 }
+          - { Type: "I2C", Count: 2 }
+          - { Type: "I2S", Count: 2 }
+          - { Type: "RTC", Count: 1 }
+          - { Type: "SDIO", Count: 1 }
+          - { Type: "SPI", Count: 3 }
+          - { Type: "Timer 16-bit", Count: 8 }
+          - { Type: "UART", Count: 2 }
+          - { Type: "USART", Count: 3 }
+          - { Type: "USB Device", Count: 1 }
