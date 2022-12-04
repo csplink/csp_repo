@@ -1,0 +1,133 @@
+Name: STM32F030C6Tx
+Company: STMicroelectronics
+Series: STM32F0
+Line: STM32F0x0
+ClockTree: STM32F0
+HasPowerPad: false
+Package: LQFP48
+Price: 999999999
+HAL: "csp_hal_stm32f0"
+CompanyUrl:
+  Chinese: "https://www.st.com/content/st_com/zh.html"
+  English: "https://www.st.com/content/st_com/en.html"
+Introduction:
+  Chinese: "具有32KB Flash和48MHz CPU的主流Arm Cortex-M0超值系列MCU"
+  English: ""
+Illustrate:
+  Chinese: |
+    STM32F030x4/x6/x8/xC 微控制器包含以 48 MHz 频率运行的高性能 Arm® Cortex®-M0 32 位 RISC内核、高速嵌入式存储器（高达 256 KB 的闪存和高达 32 KB 的闪存） SRAM），以及广泛的增强型外设和I /O。所有器件都提供标准通信接口（最多两个 I2C、最多两个 SPI 和最多六个 USART）、一个 12 位 ADC、七个通用 16位定时器和一个高级控制 PWM 定时器。
+    STM32F030x4/x6/x8/xC 微控制器可在 -40 至 +85 °C 的温度范围内工作，电源电压为2.4 至 3.6V。一套全面的节能模式允许设计低功耗应用。
+    STM32F030x4/x6/x8/xC 微控制器包括采用四种不同封装的器件，从 20 引脚到 64 引脚不等。根据选择的设备，包括不同的外围设备。下面的描述概述了建议的 STM32F030x4/x6/x8/xC 外设的完整范围。
+    这些特性使STM32F030x4/x6/x8/xC 微控制器适用于广泛的应用，例如应用控制和用户界面、手持设备、A/V 接收器和数字电视、PC 外围设备、游戏和 GPS 平台、工业应用、PLC 、逆变器、打印机、扫描仪、警报系统、视频对讲机和暖通空调。
+  English: ""
+Url:
+  Chinese: "https://www.st.com/zh/microcontrollers-microprocessors/stm32f030c6.html"
+  English: ""
+Documents:
+  DataSheets:
+    - Name: "Datasheet"
+      Url:
+        Chinese: "https://www.st.com/resource/zh/datasheet/stm32f030c6.pdf"
+        English: ""
+  References:
+    - Name: "RM0360: STM32F030x4/x6/x8/xC and STM32F070x6/xB advanced ARM®-based 32-bit MCUs"
+      Url:
+        Chinese: "https://www.st.com/resource/zh/reference_manual/rm0360-stm32f030x4x6x8xc-and-stm32f070x6xb-advanced-armbased-32bit-MCUs-stmicroelectronics.pdf"
+        English: ""
+  Programs:
+    - Name: "PM0215: STM32F0xxx Cortex-M0 programming manual"
+      Url:
+        Chinese: "https://www.st.com/resource/zh/programming_manual/pm0215-stm32f0xxx-cortexm0-programming-manual-stmicroelectronics.pdf"
+        English: ""
+  Errata:
+    - Name: "ES0219: STM32F030x4/x6/x8/xC device Errata"
+      Url:
+        Chinese: "https://www.st.com/resource/zh/Errata_sheet/es0219-stm32f030x4x6x8xc-device-Errata-stmicroelectronics.pdf"
+        English: ""
+  Applications:
+    - Name: "AN3126 Audio and waveform generation using the DAC in STM32 products"
+      Url:
+        Chinese: "https://www.st.com/resource/zh/application_note/an3126-audio-and-waveform-generation-using-the-dac-in-stm32-products-stmicroelectronics.pdf"
+        English: ""
+Modules:
+  System Core:
+    - Name: DMA
+      Description:
+        Chinese: ""
+        English: ""
+    - Name: GPIO
+      Description:
+        Chinese: ""
+        English: ""
+    - Name: I2C
+      Description:
+        Chinese: ""
+        English: ""
+    - Name: NVIC
+      Description:
+        Chinese: ""
+        English: ""
+    - Name: RCC
+      Description:
+        Chinese: ""
+        English: ""
+    - Name: SYS
+      Description:
+        Chinese: ""
+        English: ""
+    - Name: WWDG
+      Description:
+        Chinese: ""
+        English: ""
+  Analog:
+    - Name: ADC
+      Description:
+        Chinese: ""
+        English: ""
+  Timers:
+    - Name: RTC
+      Description:
+        Chinese: ""
+        English: ""
+    - Name: TIM1
+      Description:
+        Chinese: ""
+        English: ""
+    - Name: TIM3
+      Description:
+        Chinese: ""
+        English: ""
+    - Name: TIM14
+      Description:
+        Chinese: ""
+        English: ""
+    - Name: TIM16
+      Description:
+        Chinese: ""
+        English: ""
+    - Name: TIM17
+      Description:
+        Chinese: ""
+        English: ""
+  Connectivity:
+    - Name: I2C1
+      Description:
+        Chinese: ""
+        English: ""
+    - Name: IRTIM
+      Description:
+        Chinese: ""
+        English: ""
+    - Name: SPI1
+      Description:
+        Chinese: ""
+        English: ""
+    - Name: USART1
+      Description:
+        Chinese: ""
+        English: ""
+  Computing:
+    - Name: CRC
+      Description:
+        Chinese: ""
+        English: ""
