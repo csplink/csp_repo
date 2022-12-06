@@ -23,172 +23,172 @@ Url:
   English:
 Documents:
   DataSheets:
-    - Name: APM32F103xDxE数据手册V1.7
+    APM32F103xDxE数据手册V1.7:
       Url:
         Chinese: https://geehy.com/uploads/tool/APM32F103xDxE%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C%20V1.7.pdf
         English:
   References:
-    - Name: APM32F103xCxDxE用户手册V1.5
+    APM32F103xCxDxE用户手册V1.5:
       Url:
         Chinese: https://geehy.com/uploads/tool/APM32F103xCxDxE%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C%20V1.5.pdf
         English:
   Errata:
-    - Name: APM32F103XE_I2C_加入六轴传感器后，I2C通讯EEPROM会挂
+    APM32F103XE_I2C_加入六轴传感器后，I2C通讯EEPROM会挂:
       Url:
         Chinese: https://geehy.com/uploads/tool/FAQ20220306_APM32F103XE_I2C_%E5%8A%A0%E5%85%A5%E5%85%AD%E8%BD%B4%E4%BC%A0%E6%84%9F%E5%99%A8%E5%90%8E%EF%BC%8CI2C%E9%80%9A%E8%AE%AFEEPROM%E4%BC%9A%E6%8C%82%E6%AD%BB.pdf
         English:
 Modules:
   System Core:
-    - Name: DMA
+    DMA:
       Description:
         Chinese:
         English:
-    - Name: GPIO
+    GPIO:
       Description:
         Chinese:
         English:
-    - Name: IWDG
+    IWDG:
       Description:
         Chinese:
         English:
-    - Name: NVIC
+    NVIC:
       Description:
         Chinese:
         English:
-    - Name: RCC
+    RCC:
       Description:
         Chinese:
         English:
-    - Name: SYS
+    SYS:
       Description:
         Chinese:
         English:
-    - Name: WWDG
+    WWDG:
       Description:
         Chinese:
         English:
   Analog:
-    - Name: ADC1
+    ADC1:
       Description:
         Chinese:
         English:
-    - Name: ADC2
+    ADC2:
       Description:
         Chinese:
         English:
-    - Name: ADC3
+    ADC3:
       Description:
         Chinese:
         English:
-    - Name: DAC
+    DAC:
       Description:
         Chinese:
         English:
   Timers:
-    - Name: RTC
+    RTC:
       Description:
         Chinese:
         English:
-    - Name: TIM1
+    TIM1:
       Description:
         Chinese:
         English:
-    - Name: TIM2
+    TIM2:
       Description:
         Chinese:
         English:
-    - Name: TIM3
+    TIM3:
       Description:
         Chinese:
         English:
-    - Name: TIM4
+    TIM4:
       Description:
         Chinese:
         English:
-    - Name: TIM5
+    TIM5:
       Description:
         Chinese:
         English:
-    - Name: TIM6
+    TIM6:
       Description:
         Chinese:
         English:
-    - Name: TIM7
+    TIM7:
       Description:
         Chinese:
         English:
-    - Name: TIM8
+    TIM8:
       Description:
         Chinese:
         English:
   Connectivity:
-    - Name: CAN
+    CAN:
       Description:
         Chinese:
         English:
-    - Name: FSMC
+    FSMC:
       Description:
         Chinese:
         English:
-    - Name: I2C1
+    I2C1:
       Description:
         Chinese:
         English:
-    - Name: I2C2
+    I2C2:
       Description:
         Chinese:
         English:
-    - Name: SDIO
+    SDIO:
       Description:
         Chinese:
         English:
-    - Name: SPI1
+    SPI1:
       Description:
         Chinese:
         English:
-    - Name: SPI2
+    SPI2:
       Description:
         Chinese:
         English:
-    - Name: SPI3
+    SPI3:
       Description:
         Chinese:
         English:
-    - Name: UART4
+    UART4:
       Description:
         Chinese:
         English:
-    - Name: UART5
+    UART5:
       Description:
         Chinese:
         English:
-    - Name: USART1
+    USART1:
       Description:
         Chinese:
         English:
-    - Name: USART2
+    USART2:
       Description:
         Chinese:
         English:
-    - Name: USART3
+    USART3:
       Description:
         Chinese:
         English:
-    - Name: USB
+    USB:
       Description:
         Chinese:
         English:
   Multimedia:
-    - Name: I2S2
+    I2S2:
       Description:
         Chinese:
         English:
-    - Name: I2S3
+    I2S3:
       Description:
         Chinese:
         English:
   Computing:
-    - Name: CRC
+    CRC:
       Description:
         Chinese:
         English:
