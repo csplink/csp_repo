@@ -1,7 +1,9 @@
 {
     "name": "csp_hal_apm32f1",
-    "description": "hal driver library for apm32f1xx",
-    "description_zh": "apm32f1xx 的 hal 驱动库",
+    "description": {
+        "english": "hal driver library for apm32f1xx",
+        "chinese": "apm32f1xx的 hal 驱动库"
+    },
     "keywords": [
         "apm32",
         "apm32f1",
