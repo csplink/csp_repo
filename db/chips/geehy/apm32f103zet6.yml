@@ -8,187 +8,187 @@ Package: LQFP144
 Price: 999999999
 HAL: csp_hal_apm32f1
 CompanyUrl:
-  Chinese: https://geehy.com
-  English:
+  zh-cn: https://geehy.com
+  en-us:
 Introduction:
-  Chinese: 具有 512KB Flash和 96MHz CPU的主流 Arm Cortex-M3 超值系列 MCU
-  English:
+  zh-cn: 具有 512KB Flash和 96MHz CPU的主流 Arm Cortex-M3 超值系列 MCU
+  en-us:
 Illustrate:
-  Chinese: |
+  zh-cn: |
     APM32F103xDxE系列MCU，基于32位Arm® Cortex®-M3内核，最高工作主频96MHz，支持FPU浮点运算单元，配置增强型外部存储控制器EMMC，支持USB和CAN接口同时使用；集成片上储存器、定时器以及数据转换器等多种外设接口，具有功耗低、容量大、可移植性好、Flash擦除/编程速度快等特点。
     目前已经通过中国IEC61508 SIL2认证和USB-IF测试，符合工业级高可靠性标准。适用于航模飞机、手持云台、扫码枪、报警器、密码锁、电子秤等领域。
-  English:
+  en-us:
 Url:
-  Chinese: https://geehy.com/apm32?id=17
-  English:
+  zh-cn: https://geehy.com/apm32?id=17
+  en-us:
 Documents:
   DataSheets:
     APM32F103xDxE数据手册V1.7:
       Url:
-        Chinese: https://geehy.com/uploads/tool/APM32F103xDxE%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C%20V1.7.pdf
-        English:
+        zh-cn: https://geehy.com/uploads/tool/APM32F103xDxE%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C%20V1.7.pdf
+        en-us:
   References:
     APM32F103xCxDxE用户手册V1.5:
       Url:
-        Chinese: https://geehy.com/uploads/tool/APM32F103xCxDxE%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C%20V1.5.pdf
-        English:
+        zh-cn: https://geehy.com/uploads/tool/APM32F103xCxDxE%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C%20V1.5.pdf
+        en-us:
   Errata:
     APM32F103XE_I2C_加入六轴传感器后，I2C通讯EEPROM会挂:
       Url:
-        Chinese: https://geehy.com/uploads/tool/FAQ20220306_APM32F103XE_I2C_%E5%8A%A0%E5%85%A5%E5%85%AD%E8%BD%B4%E4%BC%A0%E6%84%9F%E5%99%A8%E5%90%8E%EF%BC%8CI2C%E9%80%9A%E8%AE%AFEEPROM%E4%BC%9A%E6%8C%82%E6%AD%BB.pdf
-        English:
+        zh-cn: https://geehy.com/uploads/tool/FAQ20220306_APM32F103XE_I2C_%E5%8A%A0%E5%85%A5%E5%85%AD%E8%BD%B4%E4%BC%A0%E6%84%9F%E5%99%A8%E5%90%8E%EF%BC%8CI2C%E9%80%9A%E8%AE%AFEEPROM%E4%BC%9A%E6%8C%82%E6%AD%BB.pdf
+        en-us:
 Modules:
   System Core:
     DMA:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     GPIO:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     IWDG:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     NVIC:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     RCC:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     SYS:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     WWDG:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
   Analog:
     ADC1:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     ADC2:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     ADC3:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     DAC:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
   Timers:
     RTC:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     TIM1:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     TIM2:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     TIM3:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     TIM4:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     TIM5:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     TIM6:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     TIM7:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     TIM8:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
   Connectivity:
     CAN:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     FSMC:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     I2C1:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     I2C2:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     SDIO:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     SPI1:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     SPI2:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     SPI3:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     UART4:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     UART5:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     USART1:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     USART2:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     USART3:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     USB:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
   Multimedia:
     I2S2:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
     I2S3:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
   Computing:
     CRC:
       Description:
-        Chinese:
-        English:
+        zh-cn:
+        en-us:
