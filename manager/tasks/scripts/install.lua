@@ -37,7 +37,7 @@ function create_build_xmake(target)
     local data = io.readfile(build_xmake_path_template)
     table.insert(build_xmake, data)
     update_build_xmake(target)
-    data = table.concat(build_xmake, "\n") .. "\n"
+    data = table.concat(build_xmake, "\n")
     print("generate %s", build_xmake_path)
     io.writefile(build_xmake_path, data)
 end
@@ -78,6 +78,9 @@ function add_hal(target)
     -- use semver to parse version
     local configuration = json.loadfile(scriptdir .. "/../../../packages/hal/" .. hal .. ".json")
     local versions = configuration["versions"]
+    if not table.contains(versions, "latest") then
+        table.insert(versions, "latest")
+    end
     version, source = semver.select(version, versions)
     print("use hal: '%s' version: '%s'", hal, version)
 
