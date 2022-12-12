@@ -15,11 +15,35 @@
 -- Copyright (C) 2022-present xqyjlj<xqyjlj@126.com>, csplink.github.io
 --
 -- @author      xqyjlj
--- @file        xmake.lua
+-- @file        csplink.lua
 --
 
 set_xmakever("2.7.2")
 
-set_description("The official package repository of csplink")
+if is_mode("debug") then
+    add_defines("DEBUG")
+end
 
-includes("manager/xmake.lua")
+includes("rules.lua")
+includes("tasks.lua")
+
+add_moduledirs(path.absolute(os.scriptdir()) .. "/modules")
+
+local build_xmake_path = path.absolute(os.projectdir() .. "/build/csplink.lua")
+if has_config("buildir") then
+    if not os.exists(build_xmake_path) then
+        print("please use command 'xmake csp -i' to init this project")
+    end
+end
+
+if not os.exists(build_xmake_path) then
+    target("csp_target")
+    target_end()
+
+    rule("csp_rule")
+    rule_end()
+end
+
+if os.exists(build_xmake_path) then
+    includes(build_xmake_path)
+end

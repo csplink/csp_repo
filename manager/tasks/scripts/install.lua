@@ -32,7 +32,7 @@ local scriptdir = string.gsub(path.absolute(os.scriptdir()), "\\", "/")
 local buildir = projectdir .. "/build"
 
 function create_build_xmake(target)
-    local build_xmake_path = buildir .. "/xmake.lua"
+    local build_xmake_path = buildir .. "/csplink.lua"
     build_xmake_path_template = scriptdir .. "/../../template/build_xmake.lua"
     local data = io.readfile(build_xmake_path_template)
     table.insert(build_xmake, data)
@@ -97,10 +97,10 @@ function add_hal(target)
     end
 
     hal_path = string.gsub(hal_path, "\\", "/")
-    -- insert "includes("/home/csplink/git/github/csplink/csp_hal_apm32f1/examples/get-started/hello_world/../../../package.lua")"
+    -- insert "includes("/home/csplink/git/github/csplink/csp_hal_apm32f1/examples/get-started/hello_world/../../../csplink.lua")"
     table.insert(build_xmake, "-- hal_package")
     hal_path = string.format(hal_path, hal, version)
-    local includes = string.format('includes("%s/package.lua")', hal_path)
+    local includes = string.format('includes("%s/csplink.lua")', hal_path)
     table.insert(build_xmake, includes)
 
     -- insert "includes("/home/csplink/git/github/csplink/csp_hal_apm32f1/examples/get-started/hello_world/../../../tools/xmake/toolchains/arm-none-eabi.lua"))"

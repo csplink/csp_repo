@@ -15,13 +15,13 @@
 -- Copyright (C) 2022-present xqyjlj<xqyjlj@126.com>, csplink.github.io
 --
 -- @author      xqyjlj
--- @file        xmake.lua
+-- @file        csplink.lua
 --
 
 set_xmakever("2.7.2")
 
 for _, dir in ipairs(os.dirs("/*")) do
-    file = dir .. "/xmake.lua"
+    file = dir .. "/csplink.lua"
     if os.exists(file) then
         includes(file)
     end
