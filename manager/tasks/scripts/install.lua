@@ -189,6 +189,8 @@ function add_option(target, name)
     table.insert(build_xmake, "")
 end
 
-function main(target)
+function main()
+    local target = project.target(project.name())
+    assert(target, "not find target:'%s', please check your project name and target name are the same.", project.name())
     create_build_xmake(target)
 end

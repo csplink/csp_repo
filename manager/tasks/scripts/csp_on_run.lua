@@ -24,12 +24,8 @@ import("core.base.option")
 
 import("install")
 
-local target = project.target(project.name())
-
-assert(target, "not find target: '%s', please check your project name and target name are the same.", project.name())
-
 function main()
     if option.get("install") then
-        install.main(target)
+        install.main()
     end
 end
