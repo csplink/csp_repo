@@ -77,7 +77,7 @@ function add_hal(target)
 
     -- use semver to parse version
     local configuration = json.loadfile(scriptdir .. "/../../../packages/hal/" .. hal .. ".json")
-    local versions = configuration["versions"]
+    local versions = table.orderkeys(configuration["versions"])
     if not table.contains(versions, "latest") then
         table.insert(versions, "latest")
     end
