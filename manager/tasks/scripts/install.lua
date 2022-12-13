@@ -20,8 +20,8 @@
 
 import("core.project.project")
 import("core.project.config")
-import("core.base.semver")
 import("core.base.json")
+import("csp.base.semver")
 
 local build_xmake = {}
 local targets = {}
@@ -29,6 +29,7 @@ local rules = {}
 local options = {}
 local projectdir = string.gsub(path.absolute(os.projectdir()), "\\", "/")
 local scriptdir = string.gsub(path.absolute(os.scriptdir()), "\\", "/")
+local package_haldir = scriptdir .. "/../../../packages/hal"
 local buildir = projectdir .. "/build"
 
 function create_build_xmake(target)
@@ -61,28 +62,7 @@ function add_hal(target)
         'not find values: \'hal\', please check that hal has been set in the target with the same name as the project. \
            e.g. \'set_values("hal", "csp_hal_apm32f1|v0.0.1").\''
     )
-
-    -- get original "hal" "version"
-    local hal_array = hal_value:split("@")
-    local hal = ""
-    local version = "latest" -- default latest
-    if #hal_array == 1 then -- set_values("hal", "csp_hal_apm32f1")
-        hal = string.trim(hal_array[1])
-    elseif #hal_array == 2 then -- set_values("hal", "csp_hal_apm32f1|v0.0.1")
-        hal = string.trim(hal_array[1])
-        version = string.trim(hal_array[2])
-    else
-        assert(false, "error value: '%s', please check hal`s value is correct.", hal_value)
-    end
-
-    -- use semver to parse version
-    local configuration = json.loadfile(scriptdir .. "/../../../packages/hal/" .. hal .. ".json")
-    local versions = table.orderkeys(configuration["versions"])
-    if not table.contains(versions, "latest") then
-        table.insert(versions, "latest")
-    end
-    version, source = semver.select(version, versions)
-    print("use hal: '%s' version: '%s'", hal, version)
+    local hal, version, configuration = semver.hal(hal_value)
 
     -- insert hal`s target
     table.insert(targets, configuration["target"])
