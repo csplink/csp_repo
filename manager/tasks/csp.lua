@@ -24,12 +24,12 @@ task("csp")
 do
     on_run("scripts/csp_on_run")
     set_category("plugin")
-    -- 设置插件的命令行选项，这里没有任何参数选项，仅仅显示插件描述
     set_menu {
         usage = "xmake csp [options]",
         description = "CSP build system options",
         options = {
-            {"i",   "install",       "k",    nil,        "init this project and install packages to this computer"},
+            {"i",   "install",       "k",    nil,        "init this project and install packages to this computer."},
+            {nil,   "get-hal",       "kv",   nil,        "download hal package to this computer."},
         }
     }
 end

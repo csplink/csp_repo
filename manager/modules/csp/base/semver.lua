@@ -43,6 +43,8 @@ function hal(hal_value)
         table.insert(versions, "latest")
     end
     version, source = import("core.base.semver").select(version, versions)
-    cprint("use hal: '${bright magenta}%s${clear}' version: '${bright magenta}%s${clear}'", hal, version)
+    cprint("${yellow}  => ${clear}${yellow}parsing hal and version ......")
+    cprint("     use hal: '${bright magenta}%s${clear}' ", hal)
+    cprint("     version: '${bright magenta}%s${clear}'", version)
     return hal, version, configuration
 end

@@ -15,21 +15,14 @@
 -- Copyright (C) 2022-present xqyjlj<xqyjlj@126.com>, csplink.github.io
 --
 -- @author      xqyjlj
--- @file        csp_on_run.lua
+-- @file        realdir.lua
 --
 
-import("core.project.project")
-import("core.project.config")
-import("core.base.option")
-
-import("install")
-import("get_hal")
-
-function main()
-    if option.get("install") then
-        install.main()
-    elseif option.get("get-hal") then
-        local hal = option.get("get-hal")
-        get_hal.main(hal)
+function main(dir)
+    if os.exists(dir) then
+        os.cd(dir)
+        dir = string.gsub(os.curdir(), "\\", "/")
+        os.cd(os.projectdir())
     end
+    return dir
 end
