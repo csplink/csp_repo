@@ -1,0 +1,27 @@
+name: test_csp_command
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test_csp_command:
+    runs-on: ubuntu-latest
+    container:
+      image: csplink/ubuntu_ci:22.04
+    steps:
+      - name: checkout csp_repo
+        uses: actions/checkout@v3
+
+      - name: install xmake
+        uses: xmake-io/github-action-setup-xmake@v1
+
+      - name: test
+        shell: bash
+        run: | # Only need to use "--root" in CI
+          xmake --version
+          xmake csp --file=csplink.lua --get-hal=csp_hal_apm32f1@latest -v --root 
+          export CSP_REPO=./
+          pushd examples/sample_project
+          xmake csp -i --root
+          popd
