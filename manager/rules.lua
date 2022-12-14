@@ -12,7 +12,7 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
--- Copyright (C) 2022-present xqyjlj<xqyjlj@126.com>, csplink.github.io
+-- Copyright (C) 2022-present xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
 -- @file        rules.lua
