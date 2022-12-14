@@ -33,23 +33,19 @@ function clone(dir, url, version)
         local command = "git clone --progress --depth=1 --recursive --shallow-submodules --branch=%s %s %s"
         os.vrun(string.format(command, version, url, dir))
     end
+    cprint('     the repository "%s" has been successfully cloned into "%s"', url, dir)
 end
 
 function submodule_sync(dir, version, opt)
-    local git = find_tool("git")
-    if git then
-        if version == "latest" then
-            os.cd(dir)
-            os.vrun("git submodule sync --recursive")
-            if not opt or not opt["remote"] then
-                os.vrun("git submodule update --init --recursive --force")
-            elseif opt["remote"] then
-                os.vrun("git submodule update --remote --recursive --force")
-            end
-            os.cd(os.projectdir())
+    if version == "latest" then
+        os.cd(dir)
+        os.vrun("git submodule sync --recursive")
+        if not opt or not opt["remote"] then
+            os.vrun("git submodule update --init --recursive --force")
+        elseif opt["remote"] then
+            os.vrun("git submodule update --remote --recursive --force")
         end
-        cprint("     submodules are synchronized")
-    else
-        raise("git not found!")
+        os.cd(os.projectdir())
     end
+    cprint("     the submodule has been successfully synced")
 end
