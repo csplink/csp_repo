@@ -25,8 +25,5 @@
     ],
     "homepage": "https://github.com/csplink/csp_hal_apm32f1",
     "readme": "https://github.com/csplink/csp_hal_apm32f1",
-    "versions": {
-        "v0.0.1": [],
-        "v0.0.2": []
-    }
+    "versions": {}
 }
