@@ -20,7 +20,7 @@ jobs:
         shell: bash
         run: | # Only need to use "--root" in CI
           xmake --version
-          xmake csp --file=csplink.lua --get-hal=csp_hal_apm32f1@latest -v --root 
+          xmake csp --file=csplink.lua --get-hal=all -v --root 
           pushd examples/sample_project
           export CSP_REPO=../../../csp_repo
           xmake csp -i --root
