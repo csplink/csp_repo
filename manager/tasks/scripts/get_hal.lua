@@ -31,25 +31,48 @@ local repository_haldir = scriptdir .. "/../../../repositories/hal"
 package_haldir = realdir.main(package_haldir)
 repository_haldir = realdir.main(repository_haldir)
 
-function main(hal_value)
+function _main(hal_value, is_all)
     local hal, version, configuration = semver.hal(hal_value)
-    local hal_path = string.format("%s/%s/%s", repository_haldir, hal, version)
-    cprint("${yellow}  => ${clear}${yellow}download hal package to this computer ......")
-    if not os.exists(hal_path) then
-        local urls = configuration["repositories"]
-        for _, url in ipairs(configuration["versions"][version]) do
-            table.insert(urls, url)
+    versions = {}
+    if is_all then
+        versions = table.orderkeys(configuration["versions"])
+        table.insert(versions, "latest")
+    else
+        table.insert(versions, version)
+    end
+    for _, version in ipairs(versions) do
+        local hal_path = string.format("%s/%s/%s", repository_haldir, hal, version)
+        cprint(
+            '${yellow}  => ${clear}${yellow}download "${bright magenta}%s@%s${clear}" package to this computer ......',
+            hal,
+            version
+        )
+        if not os.exists(hal_path) then
+            local urls = configuration["repositories"]
+            for _, url in ipairs(configuration["versions"][version]) do
+                table.insert(urls, url)
+            end
+            fasturl.add(urls)
+            urls = fasturl.sort(urls)
+            local url = urls[1]
+            if checkurl.main(url) then
+                git.clone(hal_path, url, version)
+            end
+        else
+            cprint('     hal: "${bright magenta}%s@%s${clear}" is already installed:', hal, version)
+            cprint('          "%s"', hal_path)
+            cprint("${yellow}  => ${clear}${yellow}sync submodule ......")
+            git.submodule_sync(hal_path, version)
         end
-        fasturl.add(urls)
-        urls = fasturl.sort(urls)
-        local url = urls[1]
-        if checkurl.main(url) then
-            git.clone(hal_path, url, version)
+    end
+end
+
+function main(hal_value)
+    if hal_value == "all" then
+        for _, filepath in ipairs(os.files(package_haldir .. "/*.json")) do
+            _main(path.basename(filepath), true)
         end
     else
-        cprint('     hal: "${bright magenta}%s@%s${clear}" is already installed:', hal, version)
-        cprint('          "%s"', hal_path)
-        cprint("${yellow}  => ${clear}${yellow}sync submodule ......")
-        git.submodule_sync(hal_path, version)
+        _main(hal_value, false)
     end
 end
