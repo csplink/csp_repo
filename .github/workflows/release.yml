@@ -1,4 +1,4 @@
-name: release
+name: 🔖 release
 
 on:
   push:
@@ -7,10 +7,8 @@ on:
 
 jobs:
   release:
-    name: create release compressed file
+    name: 🔖 release repository
     runs-on: ubuntu-latest
     steps:
-      - name: create a recursive clone compressed file
+      - name: 🔖 create a recursive clone compressed file
         uses: csplink/action_release/@master
-        with:
-          name: csp_repo
