@@ -27,10 +27,10 @@ end
 
 function clone(dir, url, version)
     if version == "latest" then
-        local command = "git clone --progress --depth=1 --recursive --shallow-submodules %s %s"
+        local command = "git clone --depth=1 --recursive --shallow-submodules %s %s"
         os.vrun(string.format(command, url, dir))
     else
-        local command = "git clone --progress --depth=1 --recursive --shallow-submodules --branch=%s %s %s"
+        local command = "git clone --depth=1 --recursive --shallow-submodules --branch=%s %s %s"
         os.vrun(string.format(command, version, url, dir))
     end
     cprint('     the repository "%s" has been successfully cloned into "%s"', url, dir)
