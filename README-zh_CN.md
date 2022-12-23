@@ -42,15 +42,15 @@
             <img src="https://img.shields.io/badge/video-bilibili-FB7299?style=flat" alt="bilibili" />
         </a>
     </div>
-    <b>CSP: Tools for flexible configuration of chips and boards.</b><br/>
-    <i>Software package, SDK, chip and board database manager.</i><br/>
+    <b>CSP：用于灵活配置芯片与板卡的工具</b><br/>
+    <i>软件包、SDK、芯片和板卡数据库管理器</i><br/>
 </div>
 
-**English** | [中文](README-zh_CN.md)
+[English](README.md) | **中文**
 
-## ✨ Features
+## ✨ 特性
 
-- 🔖 Include version management
-- 🎹 Cross-platform (windows, linux)
-- 🔧 xmake build tool
-- 📦️ package, SDK manager
+- 🔖 包涵版本管理
+- 🎹 跨平台（windows，linux）
+- 🔧 xmake构建工具
+- 📦️ 软件包、SDK管理器
