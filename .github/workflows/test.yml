@@ -1,4 +1,4 @@
-name: 🩺 test_csp_command
+name: 🩺 test
 
 on:
   push:
