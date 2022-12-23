@@ -52,5 +52,5 @@
 
 - 🔖 包涵版本管理
 - 🎹 跨平台（windows，linux）
-- 🔧 xmake构建工具
+- 🔧 Xmake构建工具
 - 📦️ 软件包、SDK管理器

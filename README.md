@@ -52,5 +52,5 @@
 
 - 🔖 Include version management
 - 🎹 Cross-platform (windows, linux)
-- 🔧 xmake build tool
+- 🔧 Xmake build tool
 - 📦️ package, SDK manager
