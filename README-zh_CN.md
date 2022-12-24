@@ -5,13 +5,13 @@
     <h1>CSP REPO</h1>
     <div>
         <a href="https://github.com/csplink/csp_repo/actions?query=workflow%3A%F0%9F%A9%BAtest">
-            <img src="https://img.shields.io/github/actions/workflow/status/csplink/csp_repo/test.yml?branch=master&style=flat&label=test" alt="github-ci" />
+            <img src="https://img.shields.io/github/actions/workflow/status/csplink/csp_repo/test.yml?style=flat&label=test" alt="github-ci" />
         </a>
         <a href="https://github.com/csplink/csp_repo/actions?query=workflow%3A%F0%9F%92%95mirror">
-            <img src="https://img.shields.io/github/actions/workflow/status/csplink/csp_repo/mirror.yml?branch=master&style=flat&label=mirror" alt="github-ci" />
+            <img src="https://img.shields.io/github/actions/workflow/status/csplink/csp_repo/mirror.yml?style=flat&label=mirror" alt="github-ci" />
         </a>
         <a href="https://github.com/csplink/csp_repo/actions?query=workflow%3A%F0%9F%94%96release">
-            <img src="https://img.shields.io/github/actions/workflow/status/csplink/csp_repo/release.yml?branch=master&style=flat&label=release" alt="github-ci" />
+            <img src="https://img.shields.io/github/actions/workflow/status/csplink/csp_repo/release.yml?style=flat&label=release" alt="github-ci" />
         </a>
     </div>
     <div>
