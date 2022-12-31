@@ -1,5 +1,5 @@
 <div align="center">
-    <a href="https://csplink.github.io">
+    <a href="https://csplink.top">
         <img width="160" heigth="160" src="https://raw.githubusercontent.com/csplink/csp/master/Apps/CSP.Apps.Dev/Resources/Images/logo.svg" alt="logo" />
     </a>
     <h1>CSP REPO</h1>
@@ -29,7 +29,7 @@
         <a href="https://github.com/csplink/csp_repo/blob/master/LICENSE">
             <img src="https://img.shields.io/github/license/csplink/csp_repo.svg?colorB=f48041&style=flat" alt="license" />
         </a>
-        <a href="https://csplink.github.io">
+        <a href="https://csplink.top">
             <img src="https://img.shields.io/badge/wiki-document-blue?style=flat" alt="document" />
         </a>
         <a href="https://gitter.im/csplink/community">
