@@ -10,6 +10,6 @@
 --                 /_/      
 --                         by xqyjlj<xqyjlj@126.com>
 --
--- manual: https://csplink.github.io/#/getting_started
--- donate: https://csplink.github.io/#/sponsor
+-- manual: https://csplink.top/#/getting_started
+-- donate: https://csplink.top/#/sponsor
 --
