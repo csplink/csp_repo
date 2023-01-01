@@ -39,12 +39,13 @@ function create_build_xmake(target)
     table.insert(build_xmake, data)
     update_build_xmake(target)
     data = table.concat(build_xmake, "\n")
-    print("generate %s", build_xmake_path)
+    cprint("     generate '${bright magenta}%s${clear}'", build_xmake_path)
     io.writefile(build_xmake_path, data)
 end
 
 function update_build_xmake(target)
     add_import(target)
+    cprint("${yellow}  => create build xmake ......")
     add_target(target, "csp_target")
     add_rule(target, "csp_rule")
     add_option(target, "csp_option")
@@ -105,7 +106,7 @@ function add_target(target, name)
     -- start
     for index in pairs(table.orderkeys(targets)) do
         table.insert(build_xmake, string.format('    add_deps("%s")', targets[index]))
-        print("add target deps: %s", targets[index])
+        cprint("     add target deps: '${bright magenta}%s${clear}'", targets[index])
     end
     -- end
     table.insert(
@@ -133,7 +134,7 @@ function add_rule(target, name)
     table.insert(build_xmake, '    add_deps("csp_sys_config")')
     for index in pairs(table.orderkeys(rules)) do
         table.insert(build_xmake, string.format('    add_deps("%s")', rules[index]))
-        print("add rule deps: %s", rules[index])
+        cprint("     add rule deps:   '${bright magenta}%s${clear}'", rules[index])
     end
     -- end
     table.insert(build_xmake, "end")
@@ -151,7 +152,7 @@ function add_option(target, name)
     -- start
     for index in pairs(table.orderkeys(options)) do
         table.insert(build_xmake, string.format('    add_deps("%s")', options[index]))
-        print("add option deps: %s", options[index])
+        cprint("     add option deps: '${bright magenta}%s${clear}'", options[index])
     end
     -- end
     table.insert(
