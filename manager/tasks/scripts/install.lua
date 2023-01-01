@@ -90,7 +90,7 @@ function add_hal(target)
     local toolchain = target:values("toolchain")
     if toolchain then
         table.insert(build_xmake, "-- toolchain")
-        local includes = string.format('includes("%s/tools/xmake/toolchains/%s.lua")', hal_path, toolchain)
+        local includes = string.format('includes("%s/../../toolchains/%s.lua")', scriptdir, toolchain)
         table.insert(build_xmake, includes)
         table.insert(build_xmake, "")
     end
@@ -130,6 +130,7 @@ function add_rule(target, name)
     table.insert(build_xmake, string.format('rule("%s")', name))
     table.insert(build_xmake, "do")
     -- start
+    table.insert(build_xmake, '    add_deps("csp_sys_config")')
     for index in pairs(table.orderkeys(rules)) do
         table.insert(build_xmake, string.format('    add_deps("%s")', rules[index]))
         print("add rule deps: %s", rules[index])
