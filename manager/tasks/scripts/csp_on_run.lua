@@ -25,11 +25,20 @@ import("core.base.option")
 import("install")
 import("get_hal")
 
+local install_flag = false
+local hal_value = ""
+
 function main()
     if option.get("install") then
-        install.main()
+        install_flag = true
     elseif option.get("get-hal") then
-        local hal = option.get("get-hal")
-        get_hal.main(hal)
+        hal_value = option.get("get-hal")
+    end
+
+    if install_flag == true then
+        install.main()
+    end
+    if not hal_value:trim() == "" then
+        get_hal.main(hal_value)
     end
 end
