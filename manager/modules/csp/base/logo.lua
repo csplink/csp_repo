@@ -15,17 +15,10 @@
 -- Copyright (C) 2022-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        csplink.lua
+-- @file        logo.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
 -- 2023-01-02     xqyjlj       initial version
 --
-
-
-set_xmakever("2.7.2")
-
-set_description("The official package repository of csplink")
-
-includes("manager/csplink.lua")
