@@ -22,6 +22,7 @@ import("core.project.project")
 import("core.project.config")
 import("core.base.json")
 import("csp.base.semver")
+import("csp.base.realdir")
 
 local build_xmake = {}
 local targets = {}
@@ -73,25 +74,24 @@ function add_hal(target)
     table.insert(options, configuration["option"])
     -- check hal_path
     local haldir = target:values("haldir")
-    local hal_path
     if haldir then
-        hal_path = haldir
+        haldir = realdir.main(haldir)
     else
-        hal_path = scriptdir .. "/../../../repositories/hal/%s/%s"
+        haldir = realdir.main(scriptdir .. "/../../../repositories/hal") .. "/%s/%s"
     end
 
-    hal_path = string.gsub(hal_path, "\\", "/")
-    -- insert "includes("/home/csplink/git/github/csplink/csp_hal_apm32f1/examples/get-started/hello_world/../../../csplink.lua")"
+    -- insert "includes("/home/csplink/git/github/csplink/csp_hal_apm32f1/csplink.lua")"
     table.insert(build_xmake, "-- hal_package")
-    hal_path = string.format(hal_path, hal, version)
-    local includes = string.format('includes("%s/csplink.lua")', hal_path)
+    haldir = string.format(haldir, hal, version)
+    local includes = string.format('includes("%s/csplink.lua")', haldir)
     table.insert(build_xmake, includes)
 
-    -- insert "includes("/home/csplink/git/github/csplink/csp_hal_apm32f1/examples/get-started/hello_world/../../../tools/xmake/toolchains/arm-none-eabi.lua"))"
+    -- insert "includes("/home/csplink/git/github/csplink/csp_repo/manager/toolchains/arm-none-eabi.lua"))"
     local toolchain = target:values("toolchain")
     if toolchain then
         table.insert(build_xmake, "-- toolchain")
-        local includes = string.format('includes("%s/../../toolchains/%s.lua")', scriptdir, toolchain)
+        local toolchain_dir = realdir.main(scriptdir .. "/../../toolchains")
+        local includes = string.format('includes("%s/%s.lua")', toolchain_dir, toolchain)
         table.insert(build_xmake, includes)
         table.insert(build_xmake, "")
     end
