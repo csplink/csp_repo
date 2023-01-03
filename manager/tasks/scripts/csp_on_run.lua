@@ -20,6 +20,7 @@
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
+-- 2023-01-03     xqyjlj       fix can not get-hal
 -- 2023-01-02     xqyjlj       initial version
 --
 
@@ -43,7 +44,7 @@ function main()
     if install_flag == true then
         install.main()
     end
-    if not hal_value:trim() == "" then
+    if hal_value:trim() ~= "" then
         get_hal.main(hal_value)
     end
 end
