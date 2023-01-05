@@ -20,6 +20,7 @@
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
+-- 2023-01-05     xqyjlj       add get_builtinvars
 -- 2023-01-02     xqyjlj       initial version
 --
 
@@ -53,4 +54,36 @@ function submodule_sync(dir, version, opt)
         os.cd(os.projectdir())
     end
     cprint("     the submodule has been successfully synced")
+end
+
+function get_builtinvars(dir)
+    os.cd(dir)
+    local builtinvars = {}
+    local cmds = {
+        git_tag = "git describe --tags",
+        git_tag_long = "git describe --tags --long",
+        git_branch = "git rev-parse --abbrev-ref HEAD",
+        git_commit = "git rev-parse --short HEAD",
+        git_commit_long = "git rev-parse HEAD",
+        git_commit_date = "git log -1 --date=format:%Y%m%d%H%M%S --format=%ad"
+    }
+    if git then
+        for name, argv in pairs(cmds) do
+            local result
+            result =
+                try {
+                function()
+                    return os.iorun(argv)
+                end
+            }
+            if not result then
+                result = "none"
+            end
+            builtinvars[name] = result:trim()
+        end
+    else
+        builtinvars[name] = "not find git, please install git and add it to PATH."
+    end
+    os.cd(os.projectdir())
+    return builtinvars
 end
