@@ -20,6 +20,7 @@
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
+-- 2023-01-05     xqyjlj       replace template with logo
 -- 2023-01-02     xqyjlj       initial version
 --
 
@@ -28,6 +29,7 @@ import("core.project.config")
 import("core.base.json")
 import("csp.base.semver")
 import("csp.base.realdir")
+import("csp.base.logo")
 
 local build_xmake = {}
 local targets = {}
@@ -40,8 +42,12 @@ local buildir = projectdir .. "/build"
 
 function create_build_xmake(target)
     local build_xmake_path = buildir .. "/csplink.lua"
-    build_xmake_path_template = scriptdir .. "/../../template/build_xmake.lua"
-    local data = io.readfile(build_xmake_path_template)
+    table.insert(build_xmake, "--")
+    for _, line in ipairs(logo.get_header():split("\n")) do
+        table.insert(build_xmake, ("-- " .. line):trim())
+    end
+    table.insert(build_xmake, "--")
+    table.insert(build_xmake, "")
     table.insert(build_xmake, data)
     update_build_xmake(target)
     data = table.concat(build_xmake, "\n")
