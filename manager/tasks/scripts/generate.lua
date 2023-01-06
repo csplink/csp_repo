@@ -20,6 +20,7 @@
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
+-- 2023-01-06     xqyjlj       add log, change path style
 -- 2023-01-06     xqyjlj       initial version
 --
 
@@ -27,6 +28,9 @@ import("core.base.option")
 import("core.project.project")
 import("csp.base.logo")
 import("csp.devel.git")
+
+local projectdir = string.gsub(path.absolute(os.projectdir()), "\\", "/")
+local buildir = projectdir .. "/build"
 
 function generate_header()
     local header = {}
@@ -106,6 +110,8 @@ function generate_file(header)
 end
 
 function main()
+    cprint("${yellow}  => create c header file ......")
     local data = generate_file(generate_header())
-    io.writefile("$(buildir)/csp_conf.h", data)
+    io.writefile(string.format("%s/csp_conf.h", buildir), data)
+    cprint("     generate '${bright magenta}%s/csp_conf.h${clear}'", buildir)
 end
