@@ -20,6 +20,7 @@
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
+-- 2023-01-06     xqyjlj       fix can`t import tasks.scripts.generate
 -- 2023-01-06     xqyjlj       use generate
 -- 2023-01-05     xqyjlj       use logo
 -- 2023-01-02     xqyjlj       initial version
@@ -29,7 +30,7 @@ import("core.base.option")
 import("core.project.project")
 import("csp.base.logo")
 
-import("tasks/scripts/generate", {rootdir = "../../"})
+import("..tasks.scripts.generate")
 
 -- export
 function save()
