@@ -20,6 +20,7 @@
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
+-- 2023-01-06     xqyjlj       add generate
 -- 2023-01-03     xqyjlj       fix can not get-hal
 -- 2023-01-02     xqyjlj       initial version
 --
@@ -30,21 +31,29 @@ import("core.base.option")
 
 import("install")
 import("get_hal")
+import("generate")
 
 local install_flag = false
 local hal_value = ""
+local generate_flag = false
 
 function main()
     if option.get("install") then
         install_flag = true
+        generate_flag = true
     elseif option.get("get-hal") then
         hal_value = option.get("get-hal")
+    elseif option.get("generate") then
+        generate_flag = true
     end
 
-    if install_flag == true then
+    if install_flag then
         install.main()
     end
     if hal_value:trim() ~= "" then
         get_hal.main(hal_value)
+    end
+    if generate_flag then
+        generate.main()
     end
 end

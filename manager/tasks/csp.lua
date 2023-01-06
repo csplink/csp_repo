@@ -20,6 +20,7 @@
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
+-- 2023-01-06     xqyjlj       add generate
 -- 2023-01-02     xqyjlj       initial version
 --
 
@@ -35,6 +36,7 @@ do
         options = {
             {"i",   "install",       "k",    nil,        "init this project and install packages to this computer."},
             {nil,   "get-hal",       "kv",   nil,        "download hal package to this computer."},
+            {"g",   "generate",      "k",    nil,        "generate c header file."},
         }
     }
 end
