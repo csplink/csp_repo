@@ -20,16 +20,16 @@
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
+-- 2023-01-06     xqyjlj       use generate
 -- 2023-01-05     xqyjlj       use logo
 -- 2023-01-02     xqyjlj       initial version
 --
 
 import("core.base.option")
-import("core.project.config")
 import("core.project.project")
-import("lib.detect.find_tool")
 import("csp.base.logo")
-import("csp.devel.git")
+
+import("tasks/scripts/generate", {rootdir = "../../"})
 
 -- export
 function save()
@@ -43,81 +43,6 @@ function save()
     return io.save("csp.conf", configs, {orderkeys = true})
 end
 
-function generate_header()
-    local header = {}
-    for _, optname in pairs(table.orderkeys(project.options())) do
-        local opt = project.options()[optname]
-        if opt:info().showmenu then
-            local info = {}
-            local key = "/"
-
-            -- init info object
-            info.name = optname
-            info.description = opt:info().description
-            -- convert boolean to 1 and 0
-            if opt:value() == true then
-                info.value = 1
-            elseif opt:value() == false then
-                info.value = 0
-            else
-                info.value = opt:value()
-            end
-
-            if opt:info().category then
-                key = opt:info().category
-            else
-                key = "/" -- if not use set_category, then use default "/"
-            end
-
-            if not header[key] then
-                header[key] = {} -- create new info table
-            end
-
-            header[key][info.name] = info
-        end
-    end
-    return header
-end
-
-function generate_file(header)
-    local t = {}
-    local sdk_builtinvars = git.get_builtinvars(os.projectdir())
-
-    table.insert(t, "/** ")
-    for _, line in ipairs(logo.get_header():split("\n")) do
-        table.insert(t, " " .. ("* " .. line):trim())
-    end
-    table.insert(t, " */\n") -- end
-
-    -- macro
-    table.insert(t, "#ifndef __CSP_CONFIG_H__")
-    table.insert(t, "#define __CSP_CONFIG_H__")
-    table.insert(t, "")
-    for _, k in pairs(table.orderkeys(sdk_builtinvars)) do
-        table.insert(t, "#define CSP_" .. k:upper() .. ' "' .. sdk_builtinvars[k] .. '"')
-    end
-
-    for _, mk in pairs(table.orderkeys(header)) do
-        table.insert(t, "\n/* " .. mk .. " */")
-        for _, k in pairs(table.orderkeys(header[mk])) do
-            local description = ""
-            local value = ""
-            local v = header[mk][k]
-            if v.description then
-                description = " /* " .. v.description .. " */" -- add description
-            end
-            if type(v.value) == "string" then
-                value = '"' .. v.value .. '"' -- string should be wrapped with ""
-            else
-                value = v.value
-            end
-            table.insert(t, "#define " .. k .. " " .. value .. description)
-        end
-    end
-    table.insert(t, "\n#endif")
-    return table.concat(t, "\n") .. "\n"
-end
-
 function main(target)
     if not option.get("menu") then
         return
@@ -127,6 +52,5 @@ function main(target)
     cprint("${bright green}config complete!")
 
     save() -- export config to ${projectdir}/csp.conf
-    local data = generate_file(generate_header())
-    io.writefile("$(buildir)/csp_conf.h", data)
+    generate.main()
 end
