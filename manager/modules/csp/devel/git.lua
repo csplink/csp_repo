@@ -27,16 +27,29 @@
 import("lib.detect.find_tool")
 
 local git = find_tool("git")
+local git_exec = ""
 if not git then
-    raise("git not found!")
+    local csp_path = os.getenv("CSP_PATH")
+    if not csp_path then
+        raise("git not found!")
+    else
+        local exe = csp_path .. "/tools/mingit/cmd/git.exe"
+        if os.exists(exe) then
+            git_exec = exe
+        else
+            raise("git not found!")
+        end
+    end
+else
+    git_exec = "git"
 end
 
 function clone(dir, url, version)
     if version == "latest" then
-        local command = "git clone --depth=1 --recursive --shallow-submodules %s %s"
+        local command = git_exec .. " clone --depth=1 --recursive --shallow-submodules %s %s"
         os.vrun(string.format(command, url, dir))
     else
-        local command = "git clone --depth=1 --recursive --shallow-submodules --branch=%s %s %s"
+        local command = git_exec .. " clone --depth=1 --recursive --shallow-submodules --branch=%s %s %s"
         os.vrun(string.format(command, version, url, dir))
     end
     cprint('     the repository "%s" has been successfully cloned into "%s"', url, dir)
@@ -45,11 +58,11 @@ end
 function submodule_sync(dir, version, opt)
     if version == "latest" then
         os.cd(dir)
-        os.vrun("git submodule sync --recursive")
+        os.vrun(git_exec .. " submodule sync --recursive")
         if not opt or not opt["remote"] then
-            os.vrun("git submodule update --init --recursive --force")
+            os.vrun(git_exec .. " submodule update --init --recursive --force")
         elseif opt["remote"] then
-            os.vrun("git submodule update --remote --recursive --force")
+            os.vrun(git_exec .. " submodule update --remote --recursive --force")
         end
         os.cd(os.projectdir())
     end
@@ -60,12 +73,12 @@ function get_builtinvars(dir)
     os.cd(dir)
     local builtinvars = {}
     local cmds = {
-        git_tag = "git describe --tags",
-        git_tag_long = "git describe --tags --long",
-        git_branch = "git rev-parse --abbrev-ref HEAD",
-        git_commit = "git rev-parse --short HEAD",
-        git_commit_long = "git rev-parse HEAD",
-        git_commit_date = "git log -1 --date=format:%Y%m%d%H%M%S --format=%ad"
+        git_tag = git_exec .. " describe --tags",
+        git_tag_long = git_exec .. " describe --tags --long",
+        git_branch = git_exec .. " rev-parse --abbrev-ref HEAD",
+        git_commit = git_exec .. " rev-parse --short HEAD",
+        git_commit_long = git_exec .. " rev-parse HEAD",
+        git_commit_date = git_exec .. " log -1 --date=format:%Y%m%d%H%M%S --format=%ad"
     }
     if git then
         for name, argv in pairs(cmds) do

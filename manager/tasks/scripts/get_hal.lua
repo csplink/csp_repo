@@ -25,7 +25,6 @@
 
 import("net.fasturl")
 import("devel.git.checkurl")
-import("lib.detect.find_tool")
 import("csp.base.semver")
 import("csp.base.realdir")
 import("csp.devel.git")
