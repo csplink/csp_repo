@@ -23,7 +23,6 @@
 -- 2023-01-02     xqyjlj       initial version
 --
 
-
 set_xmakever("2.7.2")
 
 for _, dir in ipairs(os.dirs("/*")) do
