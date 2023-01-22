@@ -28,7 +28,7 @@
 --      powershell: $env:CSP_REPO="D:\Users\xqyjlj\Documents\git\github\csplink\csp_repo"
 --      cmd:        set CSP_REPO="D:\Users\xqyjlj\Documents\git\github\csplink\csp_repo"
 --      bash:       export CSP_REPO="/home/csplink/git/github/csplink/csp_repo"
--- see more: https://csplink.top/#/zh-cn/packages/getting_started
+-- see more: https://csplink.top/#/zh-hans/packages/getting_started
 
 add_rules("mode.debug", "mode.release")
 

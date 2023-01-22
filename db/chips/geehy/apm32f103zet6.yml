@@ -31,187 +31,187 @@ Package: LQFP144
 Price: 999999999
 HAL: csp_hal_apm32f1
 CompanyUrl:
-  zh-cn: https://geehy.com
+  zh-hans: https://geehy.com
   en-us:
 Introduction:
-  zh-cn: 具有 512KB Flash和 96MHz CPU的主流 Arm Cortex-M3 超值系列 MCU
+  zh-hans: 具有 512KB Flash和 96MHz CPU的主流 Arm Cortex-M3 超值系列 MCU
   en-us:
 Illustrate:
-  zh-cn: |
+  zh-hans: |
     APM32F103xDxE系列MCU，基于32位Arm® Cortex®-M3内核，最高工作主频96MHz，支持FPU浮点运算单元，配置增强型外部存储控制器EMMC，支持USB和CAN接口同时使用；集成片上储存器、定时器以及数据转换器等多种外设接口，具有功耗低、容量大、可移植性好、Flash擦除/编程速度快等特点。
     目前已经通过中国IEC61508 SIL2认证和USB-IF测试，符合工业级高可靠性标准。适用于航模飞机、手持云台、扫码枪、报警器、密码锁、电子秤等领域。
   en-us:
 Url:
-  zh-cn: https://geehy.com/apm32?id=17
+  zh-hans: https://geehy.com/apm32?id=17
   en-us:
 Documents:
   DataSheets:
     APM32F103xDxE数据手册V1.7:
       Url:
-        zh-cn: https://geehy.com/uploads/tool/APM32F103xDxE%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C%20V1.7.pdf
+        zh-hans: https://geehy.com/uploads/tool/APM32F103xDxE%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C%20V1.7.pdf
         en-us:
   References:
     APM32F103xCxDxE用户手册V1.5:
       Url:
-        zh-cn: https://geehy.com/uploads/tool/APM32F103xCxDxE%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C%20V1.5.pdf
+        zh-hans: https://geehy.com/uploads/tool/APM32F103xCxDxE%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C%20V1.5.pdf
         en-us:
   Errata:
     APM32F103XE_I2C_加入六轴传感器后，I2C通讯EEPROM会挂:
       Url:
-        zh-cn: https://geehy.com/uploads/tool/FAQ20220306_APM32F103XE_I2C_%E5%8A%A0%E5%85%A5%E5%85%AD%E8%BD%B4%E4%BC%A0%E6%84%9F%E5%99%A8%E5%90%8E%EF%BC%8CI2C%E9%80%9A%E8%AE%AFEEPROM%E4%BC%9A%E6%8C%82%E6%AD%BB.pdf
+        zh-hans: https://geehy.com/uploads/tool/FAQ20220306_APM32F103XE_I2C_%E5%8A%A0%E5%85%A5%E5%85%AD%E8%BD%B4%E4%BC%A0%E6%84%9F%E5%99%A8%E5%90%8E%EF%BC%8CI2C%E9%80%9A%E8%AE%AFEEPROM%E4%BC%9A%E6%8C%82%E6%AD%BB.pdf
         en-us:
 Modules:
   System Core:
     DMA:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     GPIO:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     IWDG:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     NVIC:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     RCC:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     SYS:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     WWDG:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
   Analog:
     ADC1:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     ADC2:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     ADC3:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     DAC:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
   Timers:
     RTC:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     TIM1:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     TIM2:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     TIM3:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     TIM4:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     TIM5:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     TIM6:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     TIM7:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     TIM8:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
   Connectivity:
     CAN:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     FSMC:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     I2C1:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     I2C2:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     SDIO:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     SPI1:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     SPI2:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     SPI3:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     UART4:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     UART5:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     USART1:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     USART2:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     USART3:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     USB:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
   Multimedia:
     I2S2:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
     I2S3:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
   Computing:
     CRC:
       Description:
-        zh-cn:
+        zh-hans:
         en-us:
