@@ -34,9 +34,9 @@ do
         usage = "xmake csp [options]",
         description = "CSP build system options",
         options = {
-            {"i",   "install",       "k",    nil,        "init this project and install packages to this computer."},
-            {nil,   "get-hal",       "kv",   nil,        "download hal package to this computer."},
-            {"g",   "generate",      "k",    nil,        "generate c header file."},
+            {"i",   "install",          "k",    nil,        "init this project and install packages to this computer."},
+            {nil,   "get-hal",          "kv",   nil,        "download hal package to this computer."},
+            {nil,   "generate-header",  "k",    nil,        "generate c header file."},
         }
     }
 end

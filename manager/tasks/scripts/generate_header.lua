@@ -15,7 +15,7 @@
 -- Copyright (C) 2022-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        generate.lua
+-- @file        generate_header.lua
 --
 -- Change Logs:
 -- Date           Author       Notes

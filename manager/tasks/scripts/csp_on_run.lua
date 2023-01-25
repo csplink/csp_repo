@@ -31,20 +31,20 @@ import("core.base.option")
 
 import("install")
 import("get_hal")
-import("generate")
+import("generate_header")
 
 local install_flag = false
 local hal_value = ""
-local generate_flag = false
+local generate_header_flag = false
 
 function main()
     if option.get("install") then
         install_flag = true
-        generate_flag = true
+        generate_header_flag = true
     elseif option.get("get-hal") then
         hal_value = option.get("get-hal")
-    elseif option.get("generate") then
-        generate_flag = true
+    elseif option.get("generate-header") then
+        generate_header_flag = true
     end
 
     if install_flag then
@@ -53,7 +53,7 @@ function main()
     if hal_value:trim() ~= "" then
         get_hal.main(hal_value)
     end
-    if generate_flag then
-        generate.main()
+    if generate_header_flag then
+        generate_header.main()
     end
 end
