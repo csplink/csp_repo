@@ -39,7 +39,6 @@ function _main(hal_value, is_all)
     local hal, version, configuration = semver.hal(hal_value)
     versions = {}
     if is_all then
-        versions = table.orderkeys(configuration["versions"])
         table.insert(versions, "latest")
     else
         table.insert(versions, version)
