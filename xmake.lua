@@ -1,5 +1,3 @@
---!csp build system based on xmake
---
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- You may not use this file except in compliance with the License.
 -- You may obtain a copy of the License at
@@ -15,32 +13,14 @@
 -- Copyright (C) 2022-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        config_on_load.lua
+-- @file        xmake.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
+-- 2023-02-12     xqyjlj       adapt to xamke repository
 -- 2023-01-02     xqyjlj       initial version
 --
+set_xmakever("2.7.2")
 
-import("core.base.option")
-import("core.project.config")
-import("core.project.project")
-
--- import
-function main(target)
-    if option.get("menu") then -- if use menu then pass
-        return
-    end
-
-    if os.isfile("csp.conf") then
-        local import_configs = io.load("csp.conf")
-        if import_configs then
-            for _, k in pairs(table.orderkeys(import_configs)) do
-                if config.get(k) then
-                    config.set(k, import_configs[k], {force = true})
-                end
-            end
-        end
-    end
-end
+set_description("The official package repository of csplink")

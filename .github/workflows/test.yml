@@ -18,11 +18,6 @@ jobs:
 
       - name: 🩺 test
         shell: bash
-        run: | 
+        run: |
           export XMAKE_ROOT=y # Only need to use "--root" in CI
           xmake --version
-          xmake csp --file=csplink.lua --get-hal=all -v
-          pushd examples/sample_project
-          export CSP_REPO=../../../csp_repo
-          xmake csp -i
-          popd
