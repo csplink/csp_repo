@@ -15,4 +15,3 @@ build/
 repositories/
 
 .lua-format
-examples/
