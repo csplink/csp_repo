@@ -13,22 +13,27 @@
 -- Copyright (C) 2022-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        arm-none-eabi.lua
+-- @file        cpu_cortex_m3.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
--- 2023-02-12     xqyjlj       initial version
+-- 2023-02-16     xqyjlj       initial version
 --
-toolchain("arm-none-eabi") -- add toolchain
-do
-    set_kind("cross") -- set toolchain kind
-    set_description("arm embedded compiler")
-    set_toolset("cc", "arm-none-eabi-gcc")
-    set_toolset("ld", "arm-none-eabi-gcc")
-    set_toolset("ar", "arm-none-eabi-ar")
-    set_toolset("as", "arm-none-eabi-gcc")
+set_xmakever("2.7.2")
+
+function cpu_cortex_m3_flags()
+    return {
+        cflags = {
+            "-mcpu=cortex-m3", "-mthumb", "-mthumb-interwork", "-ffunction-sections", "-fdata-sections", "-fno-common",
+            "-fmessage-length=0"
+        },
+        asflags = {
+            "-mcpu=cortex-m3", "-mthumb", "-mthumb-interwork", "-ffunction-sections", "-fdata-sections", "-fno-common",
+            "-fmessage-length=0", "-x assembler-with-cpp"
+        },
+        ldflags = {
+            "-mcpu=cortex-m3", "-mthumb", "-mthumb-interwork", "-Wl,--gc-sections", "-Wl,--print-memory-usage"
+        }
+    }
 end
-toolchain_end()
-set_config("plat", "cross")
-set_toolchains("arm-none-eabi") -- set toolchains
