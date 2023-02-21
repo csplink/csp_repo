@@ -13,17 +13,17 @@
 -- Copyright (C) 2022-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        xmake.lua
+-- @file        sdks.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
--- 2023-02-21     xqyjlj       add tasks
--- 2023-02-19     xqyjlj       initial version
+-- 2023-02-21     xqyjlj       initial version
 --
-set_xmakever("2.7.2")
+import("packages")
 
-includes("flags.lua")
-includes("rules.lua")
-includes("toolchains.lua")
-includes("tasks.lua")
+function main()
+    for _, pkg in pairs(packages()["sdks"]) do
+        print(pkg.name)
+    end
+end

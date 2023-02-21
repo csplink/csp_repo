@@ -13,17 +13,25 @@
 -- Copyright (C) 2022-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        xmake.lua
+-- @file        tasks.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
--- 2023-02-21     xqyjlj       add tasks
--- 2023-02-19     xqyjlj       initial version
+-- 2023-02-21     xqyjlj       initial version
 --
 set_xmakever("2.7.2")
 
-includes("flags.lua")
-includes("rules.lua")
-includes("toolchains.lua")
-includes("tasks.lua")
+task("csp_repo")
+do
+    on_run("tasks/on_run")
+    set_category("plugin")
+    set_menu {
+        usage = "xmake csp_repo [options]",
+        description = "csp repo plugin",
+        options = {
+            {nil,   "sdks",             "k",    nil,        "get sdk list."},
+        }
+    }
+end
+task_end()

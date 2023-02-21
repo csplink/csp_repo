@@ -13,17 +13,21 @@
 -- Copyright (C) 2022-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        xmake.lua
+-- @file        on_run.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
--- 2023-02-21     xqyjlj       add tasks
--- 2023-02-19     xqyjlj       initial version
+-- 2023-02-21     xqyjlj       initial version
 --
-set_xmakever("2.7.2")
+import("core.project.project")
+import("core.project.config")
+import("core.base.option")
 
-includes("flags.lua")
-includes("rules.lua")
-includes("toolchains.lua")
-includes("tasks.lua")
+import("sdks")
+
+function main()
+    if option.get("sdks") then
+        sdks()
+    end
+end
