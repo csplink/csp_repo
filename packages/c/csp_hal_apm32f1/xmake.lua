@@ -18,6 +18,7 @@
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
+-- 2023-02-22     xqyjlj       add configs: mcu, use_default_startup
 -- 2023-02-12     xqyjlj       initial version
 --
 package("csp_hal_apm32f1")
@@ -31,6 +32,13 @@ do
     add_urls("https://github.com/csplink/csp_hal_apm32f1.git")
     add_urls("https://gitlab.com/csplink/csp_hal_apm32f1.git")
     add_urls("https://gitee.com/csplink/csp_hal_apm32f1.git")
+
+    add_configs("mcu", {
+        description = "mcu name",
+        default = "APM32F103ZET6",
+        values = {"APM32F103C8T6", "APM32F103CBT6", "APM32F103ZET6"}
+    })
+    add_configs("use_default_startup", {description = "use default startup asm file", default = true})
 
     on_install(function(package)
         import("package.tools.xmake").install(package)
