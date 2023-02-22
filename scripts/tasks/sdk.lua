@@ -13,27 +13,32 @@
 -- Copyright (C) 2022-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        tasks.lua
+-- @file        sdk.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
--- 2023-02-22     xqyjlj       add sdk
--- 2023-02-21     xqyjlj       initial version
+-- 2023-02-22     xqyjlj       initial version
 --
-set_xmakever("2.7.2")
+import("core.base.json")
 
-task("csp_repo")
-do
-    on_run("tasks/on_run")
-    set_category("plugin")
-    set_menu {
-        usage = "xmake csp_repo [options]",
-        description = "csp repo plugin",
-        options = {
-            {nil,   "sdks",             "k",    nil,        "get sdk list."},
-            {nil,   "sdk",              "kv",   nil,        "get sdk info."},
-        }
-    }
+import("packages")
+
+function main(name)
+    for _, pkg in pairs(packages()["sdks"]) do
+        if pkg.name == name then
+            local info = {}
+            info.name = pkg.name
+            info.description = pkg.instance:description()
+            info.license = pkg.instance:license()
+            info.urls = pkg.instance:urls()
+            info.homepage = pkg.instance:get("homepage")
+            info.kind = pkg.instance:kind()
+            info.deps = pkg.instance:deps()
+            info.versions = pkg.instance:versions()
+            info.configs = pkg.instance:configs()
+            print(info)
+            vprint(json.encode(info))
+        end
+    end
 end
-task_end()

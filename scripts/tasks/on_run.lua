@@ -18,6 +18,7 @@
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
+-- 2023-02-22     xqyjlj       add sdk
 -- 2023-02-21     xqyjlj       initial version
 --
 import("core.project.project")
@@ -25,9 +26,12 @@ import("core.project.config")
 import("core.base.option")
 
 import("sdks")
+import("sdk")
 
 function main()
     if option.get("sdks") then
         sdks()
+    elseif option.get("sdk") then
+        sdk(option.get("sdk"))
     end
 end
