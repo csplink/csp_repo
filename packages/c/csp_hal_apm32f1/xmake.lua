@@ -25,13 +25,15 @@ package("csp_hal_apm32f1")
 do
     set_kind("library")
     set_homepage("https://github.com/csplink/csp_hal_apm32f1")
-    set_description("sdks: APM32F1 SDK based on STM32CubeF1 HAL Driver.")
+    set_description("APM32F1 SDK based on STM32CubeF1 HAL Driver.")
     set_license("Apache-2.0")
+    set_base("template_sdk")
 
     add_urls("https://github.com/csplink/csp_hal_apm32f1/archive/$(version).tar.gz")
     add_urls("https://github.com/csplink/csp_hal_apm32f1.git")
     add_urls("https://gitlab.com/csplink/csp_hal_apm32f1.git")
     add_urls("https://gitee.com/csplink/csp_hal_apm32f1.git")
+    add_urls("https://e.coding.net/csplink/csplink/csp_hal_apm32f1.git")
 
     add_configs("mcu", {
         description = "mcu name",
@@ -50,3 +52,4 @@ do
         assert(os.isfile(path.join(package:installdir("lib"), "libcsp_hal_apm32f1.a")))
     end)
 end
+package_end()

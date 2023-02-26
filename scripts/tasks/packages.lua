@@ -33,22 +33,18 @@ function main(opt)
         local instance = package.load_from_repository(package_name, nil, package_dir, package_file)
         local basename = instance:get("base")
         if instance and basename then
-            local basedir = path.join("packages", basename:sub(1, 1):lower(), basename:lower())
+            local basedir = path.join(packages_dir, basename:sub(1, 1):lower(), basename:lower())
             local basefile = path.join(basedir, "xmake.lua")
             instance._BASE = package.load_from_repository(basename, nil, basedir, basefile)
         end
         if instance then
-            local description = instance:description()
+            local basename = instance:get("base")
             local type_name = "unknown"
-            if description:startswith("sdks: ") then
+            if basename == "template_sdk" then
                 type_name = "sdks"
             end
             packages[type_name] = packages[type_name] or {}
-            table.insert(packages[type_name], {
-                name = instance:name(),
-                instance = instance,
-                type = type_name
-            })
+            table.insert(packages[type_name], {name = instance:name(), instance = instance, type = type_name})
         end
     end
     for _, packages_type in pairs(packages) do
