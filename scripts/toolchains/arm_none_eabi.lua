@@ -24,7 +24,7 @@ set_xmakever("2.7.2")
 
 toolchain("arm-none-eabi") -- add toolchain
 do
-    set_kind("cross") -- set toolchain kind
+    set_kind("standalone") -- set toolchain kind
     set_description("arm embedded compiler")
     set_toolset("cc", "arm-none-eabi-gcc")
     set_toolset("ar", "arm-none-eabi-ar")
