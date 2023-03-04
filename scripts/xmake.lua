@@ -18,12 +18,19 @@
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
+-- 2023-03-04     xqyjlj       adapt to XMAKE_RCFILES
 -- 2023-02-21     xqyjlj       add tasks
 -- 2023-02-19     xqyjlj       initial version
 --
 set_xmakever("2.7.2")
 
-includes("flags.lua")
-includes("rules.lua")
-includes("toolchains.lua")
-includes("tasks.lua")
+local __dir = ""
+local __rcfiles = os.getenv("XMAKE_RCFILES")
+if __rcfiles then
+    __dir = path.directory(__rcfiles) .. "/"
+end
+
+includes(__dir .. "flags.lua")
+includes(__dir .. "rules.lua")
+includes(__dir .. "toolchains.lua")
+includes(__dir .. "tasks.lua")
