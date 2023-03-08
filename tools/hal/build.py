@@ -57,11 +57,16 @@ def build_chips_repository(directory):
 
 """
     repository_file_path = f"{os.path.dirname(__file__)}/../../db/chips/repository.yml"
+    if not os.path.exists(f"{os.path.dirname(repository_file_path)}"):
+        os.makedirs(f"{os.path.dirname(repository_file_path)}")
 
     string = ""
-    with open(repository_file_path, "r", encoding='utf-8') as fp:
-        string = fp.read()
-    repository_config = yaml.load(string, Loader=yaml.FullLoader)
+    if not os.path.exists(f"{repository_file_path}"):
+        repository_config = {}
+    else:
+        with open(repository_file_path, "r", encoding='utf-8') as fp:
+            string = fp.read()
+        repository_config = yaml.load(string, Loader=yaml.FullLoader)
     dump = yaml.dump(repository_config, sort_keys=True, allow_unicode=True, encoding='utf-8')
     sha256_before = hashlib.sha256(dump).hexdigest()
     if not bool(repository_config):
@@ -121,6 +126,9 @@ def build_chips_chip(directory):
             assert d == chip_name, f"chip '{d}' name is not equal to '{chip_name}'."
 
             chip_file_path = f"{os.path.dirname(__file__)}/../../db/chips/{company_name}/{chip_name}.yml"
+            if not os.path.exists(f"{os.path.dirname(chip_file_path)}"):
+                os.makedirs(f"{os.path.dirname(chip_file_path)}")
+
             chip_header = f"""# Licensed under the Apache License, Version 2.0 (the "License");
 # You may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -145,10 +153,15 @@ def build_chips_chip(directory):
 #
 
 """
-            dump = yaml.dump(chip_config, sort_keys=True, allow_unicode=True, encoding='utf-8')
-            if hashlib.sha256(dump).hexdigest() == sha256_before:
-                print(f"{os.path.basename(chip_file_path)} is not changed, so ignore it.")
-                return
+            if os.path.exists(chip_file_path):
+                string = ""
+                with open(chip_file_path, "r", encoding='utf-8') as fp:
+                    string = fp.read()
+                config = yaml.load(string, Loader=yaml.FullLoader)
+                dump = yaml.dump(config, sort_keys=True, allow_unicode=True, encoding='utf-8')
+                if hashlib.sha256(dump).hexdigest() == sha256_before:
+                    print(f"{os.path.basename(chip_file_path)} is not changed, so ignore it.")
+                    return
             with open(chip_file_path, "w", encoding="utf-8") as fp:
                 fp.write(chip_header)
                 fp.write(yaml.dump(chip_config, sort_keys=True, allow_unicode=True, encoding='utf-8').decode("utf-8"))
@@ -259,9 +272,9 @@ example:
     """
     print("usage: " + os.path.basename(__file__) + " [<options>] ")
     print("")
-    print("    -h, --help       print this help")
-    print("    -t, --type       type of build")
-    print("    -d, --directory        config file directory")
+    print("    -h, --help               print this help")
+    print("    -t, --type               type of build")
+    print("    -d, --directory          config file directory")
 
 
 if __name__ == "__main__":
