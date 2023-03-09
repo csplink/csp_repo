@@ -1,0 +1,614 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# You may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Copyright (C) 2022-2023 xqyjlj<xqyjlj@126.com>
+#
+# @author      xqyjlj
+# @file        apm32f103zet6.yml
+#
+# Change Logs:
+# Date           Author       Notes
+# ------------   ----------   -----------------------------------------------
+# 2023-01-07     xqyjlj       initial version
+#
+
+Width: 1603.0
+Height: 903.0
+Controls:
+  1:
+    Base:
+      Name: LSE-Input
+      Type: TextBox
+      Multiple: 1000
+      DefaultValue: 32.768
+  2:
+    Base:
+      Name: HSE-Input
+      Type: TextBox
+      Multiple: 1000000
+      DefaultValue: 8.0
+  3:
+    Base:
+      Name: MCO-Output
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: MCO-Out
+  4:
+    Base:
+      Name: LSE-Is-Bypass
+      Type: Label
+    Styles:
+      osc32_disable:
+        IsEnabled: false
+        Dependencies: [CHAL_CLOCK_OSC32_DISABLE]
+        Text:
+          zh-hans: 关闭
+          en-us: close
+        Status: Disable
+      osc32_bypass:
+        IsEnabled: true
+        Dependencies: [CHAL_CLOCK_OSC32_BYPASS]
+        Text:
+          zh-hans: 旁路模式
+          en-us: bypass
+        Status: Enable
+      osc32_no_bypass:
+        IsEnabled: true
+        Dependencies: [CHAL_CLOCK_OSC32_NO_BYPASS]
+        Text:
+          zh-hans: 晶体模式
+          en-us: no_bypass
+        Status: Enable
+  5:
+    Base:
+      Name: HSE-Is-Bypass
+      Type: Label
+    Styles:
+      osc_disable:
+        IsEnabled: false
+        Dependencies: [CHAL_CLOCK_OSC_DISABLE]
+        Text:
+          zh-hans: 关闭
+          en-us: close
+        Status: Disable
+      osc_bypass:
+        IsEnabled: true
+        Dependencies: [CHAL_CLOCK_OSC_BYPASS]
+        Text:
+          zh-hans: 旁路模式
+          en-us: bypass
+        Status: Enable
+      osc_no_bypass:
+        IsEnabled: true
+        Dependencies: [CHAL_CLOCK_OSC_NO_BYPASS]
+        Text:
+          zh-hans: 晶体模式
+          en-us: no_bypass
+        Status: Enable
+  6:
+    Base:
+      Name: HSI-Calibration
+      Type: TextBox
+      Multiple: 1
+      DefaultValue: 16.0
+  7:
+    Base:
+      Name: MCO-Out
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: PLL-HSE-Mul
+        Value: 2
+        Operator: /
+        Dependencies: [CHAL_CLOCK_MCO_PLL_DIV2]
+      - SourceValue: 8000000
+        Dependencies: [CHAL_CLOCK_MCO_HSI]
+      - Source: HSE-Input
+        Dependencies: [CHAL_CLOCK_MCO_HSE]
+      - Source: SYS-Clk
+        Dependencies: [CHAL_CLOCK_MCO_SYSTEM_CLK]
+  8:
+    Base:
+      Name: HSE-Psc
+      Type: ComboBox
+      DefaultIndex: 1
+    Signals:
+      - Source: HSE-Input
+        Value: 1
+        Operator: /
+      - Source: HSE-Input
+        Value: 2
+        Operator: /
+  9:
+    Base:
+      Name: PLL
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - SourceValue: 8000000
+        Value: 2
+        Operator: /
+        Dependencies: [CHAL_CLOCK_PLL_HSI_DIV2]
+      - Source: HSE-Psc
+        Dependencies: [CHAL_CLOCK_PLL_HSE]
+  10:
+    Base:
+      Name: PLL-HSE-Mul
+      Type: ComboBox
+      Multiple: 1
+      DefaultIndex: 0
+    Signals:
+      - Source: PLL
+        Value: 2
+        Operator: "*"
+      - Source: PLL
+        Value: 3
+        Operator: "*"
+      - Source: PLL
+        Value: 4
+        Operator: "*"
+      - Source: PLL
+        Value: 5
+        Operator: "*"
+      - Source: PLL
+        Value: 6
+        Operator: "*"
+      - Source: PLL
+        Value: 7
+        Operator: "*"
+      - Source: PLL
+        Value: 8
+        Operator: "*"
+      - Source: PLL
+        Value: 9
+        Operator: "*"
+      - Source: PLL
+        Value: 10
+        Operator: "*"
+      - Source: PLL
+        Value: 11
+        Operator: "*"
+      - Source: PLL
+        Value: 12
+        Operator: "*"
+      - Source: PLL
+        Value: 13
+        Operator: "*"
+      - Source: PLL
+        Value: 14
+        Operator: "*"
+      - Source: PLL
+        Value: 15
+        Operator: "*"
+      - Source: PLL
+        Value: 16
+        Operator: "*"
+  11:
+    Base:
+      Name: RTC-Clk-Out
+      Type: Label
+      Multiple: 1000
+    Signals:
+      - Source: HSE-Input
+        Value: 128
+        Operator: /
+        Dependencies: [CHAL_CLOCK_RTC_HSE_DIV128]
+      - Source: LSE-Input
+        Dependencies: [CHAL_CLOCK_RTC_LSE]
+      - SourceValue: 40000
+        Dependencies: [CHAL_CLOCK_RTC_LSI]
+  12:
+    Base:
+      Name: CSS
+      Type: Label
+    Styles:
+      css_disable:
+        IsEnabled: false
+        Dependencies: [CHAL_CLOCK_CSS_DISABLE]
+        Text:
+          zh-hans: 禁用 CSS
+          en-us: disable CSS
+        Status: Disable
+      css_enable:
+        IsEnabled: true
+        Dependencies: [CHAL_CLOCK_CSS_ENABLE]
+        Text:
+          zh-hans: 使能 CSS
+          en-us: enable CSS
+        Status: Enable
+  13:
+    Base:
+      Name: USB-Clk-Psc
+      Type: ComboBox
+      Multiple: 1
+      DefaultIndex: 0
+    Signals:
+      - Source: PLL-HSE-Mul
+        Value: 1
+        Operator: /
+      - Source: PLL-HSE-Mul
+        Value: 1.5
+        Operator: /
+  14:
+    Base:
+      Name: SYS-Clk
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - SourceValue: 8000000
+        Dependencies: [CHAL_CLOCK_SYSTEM_HSI]
+      - Source: HSE-Input
+        Dependencies: [CHAL_CLOCK_SYSTEM_HSE]
+      - Source: PLL-HSE-Mul
+        Dependencies: [CHAL_CLOCK_SYSTEM_PLL]
+
+  15:
+    Base:
+      Name: USB-Clk-Out
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: USB-Clk-Psc
+  16:
+    Base:
+      Name: AHB-Psc
+      Type: ComboBox
+      Multiple: 1
+      DefaultIndex: 0
+    Signals:
+      - Source: SYS-Clk
+        Value: 1
+        Operator: /
+      - Source: SYS-Clk
+        Value: 2
+        Operator: /
+      - Source: SYS-Clk
+        Value: 4
+        Operator: /
+      - Source: SYS-Clk
+        Value: 8
+        Operator: /
+      - Source: SYS-Clk
+        Value: 16
+        Operator: /
+      - Source: SYS-Clk
+        Value: 64
+        Operator: /
+      - Source: SYS-Clk
+        Value: 128
+        Operator: /
+      - Source: SYS-Clk
+        Value: 256
+        Operator: /
+      - Source: SYS-Clk
+        Value: 512
+        Operator: /
+  17:
+    Base:
+      Name: Flash-Latency
+      Type: Label
+  18:
+    Base:
+      Name: CLK
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: AHB-Psc
+  19:
+    Base:
+      Name: SysTick-Clk-Psc
+      Type: ComboBox
+      Multiple: 1
+      DefaultIndex: 0
+    Signals:
+      - Source: CLK
+        Value: 1
+        Operator: /
+      - Source: CLK
+        Value: 8
+        Operator: /
+  20:
+    Base:
+      Name: APB1-Psc
+      Type: ComboBox
+      Multiple: 1
+      DefaultIndex: 0
+    Signals:
+      - Source: CLK
+        Value: 1
+        Operator: /
+      - Source: CLK
+        Value: 2
+        Operator: /
+      - Source: CLK
+        Value: 4
+        Operator: /
+      - Source: CLK
+        Value: 8
+        Operator: /
+      - Source: CLK
+        Value: 16
+        Operator: /
+  21:
+    Base:
+      Name: APB2-Psc
+      Type: ComboBox
+      Multiple: 1
+      DefaultIndex: 0
+    Signals:
+      - Source: CLK
+        Value: 1
+        Operator: /
+      - Source: CLK
+        Value: 2
+        Operator: /
+      - Source: CLK
+        Value: 4
+        Operator: /
+      - Source: CLK
+        Value: 8
+        Operator: /
+      - Source: CLK
+        Value: 16
+        Operator: /
+  22:
+    Base:
+      Name: APB1-Timers-Mul
+      Type: Label
+  23:
+    Base:
+      Name: APB2-Timers-Mul
+      Type: Label
+  24:
+    Base:
+      Name: ADC-Clk-Psc
+      Type: ComboBox
+      Multiple: 1
+      DefaultIndex: 0
+    Signals:
+      - Source: APB2-Psc
+        Value: 2
+        Operator: /
+      - Source: APB2-Psc
+        Value: 4
+        Operator: /
+      - Source: APB2-Psc
+        Value: 6
+        Operator: /
+      - Source: APB2-Psc
+        Value: 8
+        Operator: /
+  25:
+    Base:
+      Name: I2S3-Clk-Out
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: SYS-Clk
+  26:
+    Base:
+      Name: I2S2-Clk-Out
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: SYS-Clk
+  27:
+    Base:
+      Name: EMMC-Clk-Out
+      Type: Label
+      Multiple: 1000000
+  28:
+    Base:
+      Name: SDIO-Clk-Out
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: SYS-Clk
+  29:
+    Base:
+      Name: HCLK-Out
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: SYS-Clk
+  30:
+    Base:
+      Name: SysTick-Clk-Out
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: SysTick-Clk-Psc
+  31:
+    Base:
+      Name: FCLK-Out
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: SYS-Clk
+  32:
+    Base:
+      Name: APB1-Peripherals-Out
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: APB1-Psc
+  33:
+    Base:
+      Name: APB1-Timers-Out
+      Type: Label
+      Multiple: 1000000
+  34:
+    Base:
+      Name: APB2-Peripherals-Out
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: APB2-Psc
+  35:
+    Base:
+      Name: APB2-Timers-Out
+      Type: Label
+      Multiple: 1000000
+  36:
+    Base:
+      Name: ADC1,2,3-Timers-Out
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: ADC-Clk-Psc
+  37:
+    Base:
+      Name: SDIO-AHB-Clk-Out
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: CLK
+        Value: 2
+        Operator: /
+  38:
+    Base:
+      Name: FPU-Clk-Out
+      Type: Label
+      Multiple: 1000000
+    Signals:
+      - Source: CLK
+        Value: 2
+        Operator: /
+  39:
+    Base:
+      Name: MCO-PLL/2
+      GroupName: MCO-Clk-Selector
+      Macro: CHAL_CLOCK_MCO_PLL_DIV2
+      Type: RadioButton
+      IsChecked: true
+  40:
+    Base:
+      Name: MCO-HSI
+      GroupName: MCO-Clk-Selector
+      Macro: CHAL_CLOCK_MCO_HSI
+      Type: RadioButton
+  41:
+    Base:
+      Name: MCO-HSE
+      GroupName: MCO-Clk-Selector
+      Macro: CHAL_CLOCK_MCO_HSE
+      Type: RadioButton
+  42:
+    Base:
+      Name: MCO-System-Clk
+      GroupName: MCO-Clk-Selector
+      Macro: CHAL_CLOCK_MCO_SYSTEM_CLK
+      Type: RadioButton
+  43:
+    Base:
+      Name: PLL-HSI/2
+      GroupName: PLL-Selector
+      Macro: CHAL_CLOCK_PLL_HSI_DIV2
+      Type: RadioButton
+      IsChecked: true
+  44:
+    Base:
+      Name: PLL-HSE
+      GroupName: PLL-Selector
+      Macro: CHAL_CLOCK_PLL_HSE
+      Type: RadioButton
+  45:
+    Base:
+      Name: RTC-HSE/128
+      GroupName: RTC-Clk-Selector
+      Macro: CHAL_CLOCK_RTC_HSE_DIV128
+      Type: RadioButton
+      IsChecked: true
+  46:
+    Base:
+      Name: RTC-LSE
+      GroupName: RTC-Clk-Selector
+      Macro: CHAL_CLOCK_RTC_LSE
+      Type: RadioButton
+  47:
+    Base:
+      Name: RTC-LSI
+      GroupName: RTC-Clk-Selector
+      Macro: CHAL_CLOCK_RTC_LSI
+      Type: RadioButton
+  48:
+    Base:
+      Name: System-HSI
+      GroupName: System-Clk-Selector
+      Macro: CHAL_CLOCK_SYSTEM_HSI
+      Type: RadioButton
+      IsChecked: true
+  49:
+    Base:
+      Name: System-HSE
+      GroupName: System-Clk-Selector
+      Macro: CHAL_CLOCK_SYSTEM_HSE
+      Type: RadioButton
+  50:
+    Base:
+      Name: System-PLL
+      GroupName: System-Clk-Selector
+      Macro: CHAL_CLOCK_SYSTEM_PLL
+      Type: RadioButton
+Rects:
+  1: { X: 25.5, Y: 135.5, Width: 56.0, Height: 31.0 }
+  2: { X: 25.5, Y: 475.5, Width: 56.0, Height: 31.0 }
+  3: { X: 25.5, Y: 665.5, Width: 56.0, Height: 31.0 }
+  4: { X: 110.5, Y: 90.5, Width: 81.0, Height: 31.0 }
+  5: { X: 110.5, Y: 430.5, Width: 81.0, Height: 31.0 }
+  6: { X: 120.5, Y: 270.5, Width: 56.0, Height: 31.0 }
+  7: { X: 120.5, Y: 665.5, Width: 56.0, Height: 31.0 }
+  8: { X: 220.5, Y: 475.5, Width: 56.0, Height: 31.0 }
+  9: { X: 380.5, Y: 454.06, Width: 56.0, Height: 31.0 }
+  10: { X: 462.5, Y: 454.06, Width: 56.0, Height: 31.0 }
+  11: { X: 520.5, Y: 134.32, Width: 56.0, Height: 31.0 }
+  12: { X: 602.3, Y: 505.5, Width: 119.2, Height: 31.0 }
+  13: { X: 602.3, Y: 561.23, Width: 56.0, Height: 31.0 }
+  14: { X: 672.5, Y: 385.5, Width: 56.0, Height: 31.0 }
+  15: { X: 700.5, Y: 561.23, Width: 56.0, Height: 31.0 }
+  16: { X: 790.5, Y: 385.5, Width: 56.0, Height: 31.0 }
+  17: { X: 790.5, Y: 460.5, Width: 56.0, Height: 31.0 }
+  18: { X: 905.5, Y: 385.5, Width: 56.0, Height: 31.0 }
+  19: { X: 1022.5, Y: 285.5, Width: 56.0, Height: 31.0 }
+  20: { X: 1022.5, Y: 385.5, Width: 56.0, Height: 31.0 }
+  21: { X: 1022.5, Y: 485.52, Width: 56.0, Height: 31.0 }
+  22: { X: 1160.5, Y: 435.5, Width: 56.0, Height: 31.0 }
+  23: { X: 1160.5, Y: 535.5, Width: 56.0, Height: 31.0 }
+  24: { X: 1160.5, Y: 590.5, Width: 56.0, Height: 31.0 }
+  25: { X: 1280.5, Y: 35.5, Width: 56.0, Height: 31.0 }
+  26: { X: 1280.5, Y: 85.5, Width: 56.0, Height: 31.0 }
+  27: { X: 1280.5, Y: 135.5, Width: 56.0, Height: 31.0 }
+  28: { X: 1280.5, Y: 185.5, Width: 56.0, Height: 31.0 }
+  29: { X: 1280.5, Y: 235.5, Width: 56.0, Height: 31.0 }
+  30: { X: 1280.5, Y: 285.5, Width: 56.0, Height: 31.0 }
+  31: { X: 1280.5, Y: 335.5, Width: 56.0, Height: 31.0 }
+  32: { X: 1280.5, Y: 385.5, Width: 56.0, Height: 31.0 }
+  33: { X: 1280.5, Y: 435.5, Width: 56.0, Height: 31.0 }
+  34: { X: 1280.5, Y: 484.79, Width: 56.0, Height: 31.0 }
+  35: { X: 1280.5, Y: 535.5, Width: 56.0, Height: 31.0 }
+  36: { X: 1280.5, Y: 590.5, Width: 56.0, Height: 31.0 }
+  37: { X: 1280.5, Y: 645.5, Width: 56.0, Height: 31.0 }
+  38: { X: 1280.5, Y: 700.5, Width: 56.0, Height: 31.0 }
+Ellipses:
+  39: { X: 249.20000000000002, Y: 619.2, Width: 14.0, Height: 14.0 }
+  40: { X: 249.20000000000002, Y: 654.2, Width: 14.0, Height: 14.0 }
+  41: { X: 249.20000000000002, Y: 689.2, Width: 14.0, Height: 14.0 }
+  42: { X: 249.20000000000002, Y: 729.2, Width: 14.0, Height: 14.0 }
+  43: { X: 330.84, Y: 439.2, Width: 14.0, Height: 14.0 }
+  44: { X: 330.84, Y: 484.2, Width: 14.0, Height: 14.0 }
+  45: { X: 429.46, Y: 89.2, Width: 14.0, Height: 14.0 }
+  46: { X: 429.46, Y: 143.01, Width: 14.0, Height: 14.0 }
+  47: { X: 429.46, Y: 199.2, Width: 14.0, Height: 14.0 }
+  48: { X: 623.6999999999999, Y: 344.2, Width: 14.0, Height: 14.0 }
+  49: { X: 623.6999999999999, Y: 394.56, Width: 14.0, Height: 14.0 }
+  50: { X: 623.6999999999999, Y: 449.2, Width: 14.0, Height: 14.0 }
