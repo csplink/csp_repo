@@ -192,7 +192,6 @@ def build_hal(directory):
     if not os.path.exists(f"{os.path.dirname(__file__)}/../../db/hal/"):
         os.makedirs(f"{os.path.dirname(__file__)}/../../db/hal/")
     shutil.copytree(directory, hal_dir)
-    print(hal)
 
 
 def pr(branch):
