@@ -269,10 +269,14 @@ def update(directory):
                        shell=True,
                        check=True,
                        cwd=os.path.dirname(__file__))
-        subprocess.run(f"git push --set-upstream origin {hal}-dev",
-                       shell=True,
-                       check=True,
-                       cwd=os.path.dirname(__file__))
+        try:
+            subprocess.run(f"git push --all", shell=True, check=True, cwd=os.path.dirname(__file__))
+            # if fail, use git push --set-upstream origin {hal}-dev
+        except:
+            subprocess.run(f"git push --set-upstream origin {hal}-dev",
+                           shell=True,
+                           check=True,
+                           cwd=os.path.dirname(__file__))
         pr(f"{hal}-dev")
 
 
