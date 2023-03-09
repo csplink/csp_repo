@@ -256,7 +256,6 @@ def update(directory):
     out = out.decode("utf-8")
     if "nothing to commit, working tree clean" not in out:
         subprocess.run(f"git add -A", shell=True, check=True, cwd=os.path.dirname(__file__))
-        subprocess.run(f"git checkout -B {hal}-dev", shell=True, check=True, cwd=os.path.dirname(__file__))
         pro = subprocess.Popen('git rev-parse HEAD',
                                shell=True,
                                stdout=subprocess.PIPE,
@@ -277,7 +276,7 @@ def update(directory):
                            shell=True,
                            check=True,
                            cwd=os.path.dirname(__file__))
-        pr(f"{hal}-dev")
+        pr(os.environ.get("GITHUB_REPOSITORY", None))
 
 
 def help():
