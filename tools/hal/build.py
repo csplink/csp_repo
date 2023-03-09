@@ -257,6 +257,18 @@ def update(directory):
     if "nothing to commit, working tree clean" not in out:
         subprocess.run(f"git add -A", shell=True, check=True, cwd=os.path.dirname(__file__))
         subprocess.run(f"git checkout -B {hal}-dev", shell=True, check=True, cwd=os.path.dirname(__file__))
+        pro = subprocess.Popen('git rev-parse HEAD',
+                               shell=True,
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE,
+                               cwd=directory)
+        out, _ = pro.communicate()
+        out = out.decode("utf-8").strip()
+        print("HEAD: ", out)
+        subprocess.run(f"git commit -m 'update from {hal}: {out}'",
+                       shell=True,
+                       check=True,
+                       cwd=os.path.dirname(__file__))
         subprocess.run(f"git push --set-upstream origin {hal}-dev",
                        shell=True,
                        check=True,
