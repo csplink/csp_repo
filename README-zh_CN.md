@@ -1,6 +1,6 @@
 <div align="center">
     <a href="https://csplink.top">
-        <img width="160" heigth="160" src="https://raw.githubusercontent.com/csplink/csp/master/Apps/CSP.Apps.Dev/Resources/Images/logo.svg" alt="logo" />
+        <img width="160" heigth="160" src="https://csplink.top/assets/img/logo.svg" alt="logo" />
     </a>
     <h1>CSP REPO</h1>
     <div>
