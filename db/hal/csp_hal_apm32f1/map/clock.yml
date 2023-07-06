@@ -24,76 +24,76 @@
 Groups:
   chal_clock_osc_t:
     Comment:
-      zh-hans: HSE时钟输入源类型
-      en-us:
+      zh_CN: HSE时钟输入源类型
+      en:
     Values:
       CHAL_CLOCK_OSC_DISABLE:
         Comment:
-          zh-hans: 禁用
-          en-us:
+          zh_CN: 禁用
+          en:
       CHAL_CLOCK_OSC_BYPASS:
         Comment:
-          zh-hans: 有源晶振模式
-          en-us:
+          zh_CN: 有源晶振模式
+          en:
       CHAL_CLOCK_OSC_NO_BYPASS:
         Comment:
-          zh-hans: 无源晶振模式
-          en-us:
+          zh_CN: 无源晶振模式
+          en:
   chal_clock_osc32_t:
     Comment:
-      zh-hans: HSI时钟输入源类型
-      en-us:
+      zh_CN: HSI时钟输入源类型
+      en:
     Values:
       CHAL_CLOCK_OSC32_DISABLE:
         Comment:
-          zh-hans: 禁用
-          en-us:
+          zh_CN: 禁用
+          en:
       CHAL_CLOCK_OSC32_BYPASS:
         Comment:
-          zh-hans: 有源晶振模式
-          en-us:
+          zh_CN: 有源晶振模式
+          en:
       CHAL_CLOCK_OSC32_NO_BYPASS:
         Comment:
-          zh-hans: 无源晶振模式
-          en-us:
+          zh_CN: 无源晶振模式
+          en:
   chal_clock_css_t:
     Comment:
-      zh-hans: CSS时钟安全系统
-      en-us:
+      zh_CN: CSS时钟安全系统
+      en:
     Values:
       CHAL_CLOCK_CSS_DISABLE:
         Comment:
-          zh-hans: 禁用
-          en-us:
+          zh_CN: 禁用
+          en:
       CHAL_CLOCK_CSS_ENABLE:
         Comment:
-          zh-hans: 启用
-          en-us:
+          zh_CN: 启用
+          en:
 Properties:
   chal_clock_osc_t:
     DisplayName:
-      zh-hans: HSE时钟输入源
-      en-us:
+      zh_CN: HSE时钟输入源
+      en:
     Description:
-      zh-hans: Clock-HSE时钟输入源
-      en-us:
+      zh_CN: Clock-HSE时钟输入源
+      en:
     Category: Clock
     ReadOnly: false
   chal_clock_osc32_t:
     DisplayName:
-      zh-hans: HSI时钟输入源
-      en-us:
+      zh_CN: HSI时钟输入源
+      en:
     Description:
-      zh-hans: Clock-HSI时钟输入源
-      en-us:
+      zh_CN: Clock-HSI时钟输入源
+      en:
     Category: Clock
     ReadOnly: false
   chal_clock_css_t:
     DisplayName:
-      zh-hans: CSS时钟安全系统
-      en-us:
+      zh_CN: CSS时钟安全系统
+      en:
     Description:
-      zh-hans: Clock-CSS时钟安全系统
-      en-us:
+      zh_CN: Clock-CSS时钟安全系统
+      en:
     Category: Clock
     ReadOnly: false

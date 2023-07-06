@@ -23,7 +23,6 @@
 
 Input-Std:
   chal_gpio_pull_t:
-    - CHAL_GPIO_PULL_NO
     - CHAL_GPIO_PULL_UP
     - CHAL_GPIO_PULL_DOWN
   chal_gpio_mode_t:
@@ -46,7 +45,6 @@ Analog-Std:
     - CHAL_GPIO_MODE_ANALOG
 Eventout-Std:
   chal_gpio_pull_t:
-    - CHAL_GPIO_PULL_NO
     - CHAL_GPIO_PULL_UP
     - CHAL_GPIO_PULL_DOWN
   chal_gpio_speed_t:
@@ -59,6 +57,5 @@ Eventout-Std:
     - CHAL_GPIO_OUTPUT_PP
 Exti-Std:
   chal_gpio_pull_t:
-    - CHAL_GPIO_PULL_NO
     - CHAL_GPIO_PULL_UP
     - CHAL_GPIO_PULL_DOWN
