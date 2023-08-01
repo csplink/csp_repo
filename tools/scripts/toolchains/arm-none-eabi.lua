@@ -20,7 +20,6 @@
 -- ------------   ----------   -----------------------------------------------
 -- 2023-07-03     xqyjlj       initial version
 --
-
 toolchain("arm-none-eabi") -- add toolchain
 do
     set_kind("cross") -- set toolchain kind
@@ -28,6 +27,15 @@ do
 
     on_load(function(toolchain)
         toolchain:load_cross_toolchain()
+        toolchain:set("toolset", "cc", "arm-none-eabi-gcc")
+        toolchain:set("toolset", "cxx", "arm-none-eabi-g++")
+        toolchain:set("toolset", "ld", "arm-none-eabi-g++")
+        toolchain:set("toolset", "ar", "arm-none-eabi-ar")
+        toolchain:set("toolset", "as", "arm-none-eabi-gcc")
+        toolchain:set("toolset", "objcopy", "arm-none-eabi-objcopy")
+        toolchain:set("toolset", "size", "arm-none-eabi-size")
+
+        toolchain:add("ldflags", "-Wl,--print-memory-usage", {force = true})
     end)
 end
 toolchain_end()
