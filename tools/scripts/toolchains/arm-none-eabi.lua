@@ -1,3 +1,4 @@
+--
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- You may not use this file except in compliance with the License.
 -- You may obtain a copy of the License at
@@ -35,7 +36,13 @@ do
         toolchain:set("toolset", "objcopy", "arm-none-eabi-objcopy")
         toolchain:set("toolset", "size", "arm-none-eabi-size")
 
-        toolchain:add("ldflags", "-Wl,--print-memory-usage", {force = true})
+        toolchain:add("cxflags", "-mthumb", "-mthumb-interwork", "-ffunction-sections", "-fdata-sections",
+                      "-fno-common", "-fmessage-length=0", {force = true})
+        toolchain:add("asflags", "-mthumb", "-mthumb-interwork", "-ffunction-sections", "-fdata-sections",
+                      "-fno-common", "-fmessage-length=0", "-x", " assembler-with-cpp", {force = true})
+        toolchain:add("ldflags", "-mthumb", "-mthumb-interwork", "-ffunction-sections", "-fdata-sections",
+                      "-fno-common", "-fmessage-length=0", "-Wl,--gc-sections", "-Wl,--print-memory-usage",
+                      {force = true})
     end)
 end
 toolchain_end()

@@ -19,28 +19,31 @@
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
--- 2023-02-19     xqyjlj       initial version
+-- 2023-08-01     xqyjlj       initial version
 --
 set_xmakever("2.7.2")
 
-rule("csp.bin")
+rule("csp.cpu")
 do
-    after_link(function(target)
+    on_config(function(target)
         import("core.project.config")
-        local artifact_dir = path.join(config.buildir(), config.plat(), config.arch(), config.mode())
-        local objcopy, _ = target:tool("objcopy")
-        local size, _ = target:tool("size")
+        local arch = config.get("arch")
+        local cpu = config.get("cpu")
+        assert(arch, "must configure project arch")
+        assert(cpu, "must configure project cpu")
 
-        if objcopy then
-            local hex = path.join(artifact_dir, target:name() .. ".hex")
-            os.vrunv(objcopy, {"-O", "ihex", target:targetfile(), hex})
-            local bin = path.join(artifact_dir, target:name() .. ".bin")
-            os.vrunv(objcopy, {"-O", "binary", target:targetfile(), bin})
+        if arch == "arm" then
+            if cpu == "cortex-m3" then
+                target:add("cxflags", "-mcpu=cortex-m3", {force = true})
+                target:add("asflags", "-mcpu=cortex-m3", {force = true})
+                target:add("ldflags", "-mcpu=cortex-m3", {force = true})
+            else
+                os.raise("unsupport cpu <" .. cpu .. ">")
+            end
+        else
+            os.raise("unsupport arch <" .. arch .. ">")
         end
-        if size then
-            os.vexecv(size, {"--format=berkeley", target:targetfile()})
-            -- os.vexecv(size, {"--format=sysv", target:targetfile()})
-        end
+
     end)
 end
 rule_end()
