@@ -39,7 +39,7 @@ do
         end
 
         local map = path.join(artifact_dir, target:name() .. ".map")
-        target:add("ldflags", "-Wl,-Map," .. map, {force = true})
+        target:add("ldflags", "-Wl,-Map=" .. map, {force = true})
     end)
 end
 rule_end()
