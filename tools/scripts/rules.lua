@@ -21,8 +21,6 @@
 -- ------------   ----------   -----------------------------------------------
 -- 2023-02-19     xqyjlj       initial version
 --
-set_xmakever("2.7.2")
-
 for _, file in ipairs(os.files(path.join(os.scriptdir(), "rules", "*lua"))) do
     includes(file)
 end

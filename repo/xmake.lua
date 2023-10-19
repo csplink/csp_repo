@@ -22,6 +22,6 @@
 -- 2023-07-03     xqyjlj       initial version
 --
 
-set_xmakever("2.7.9")
+set_xmakever("2.8.3")
 
 set_description("The official package repository of csplink")

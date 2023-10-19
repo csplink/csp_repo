@@ -23,7 +23,7 @@
 -- 2023-02-21     xqyjlj       add tasks
 -- 2023-02-19     xqyjlj       initial version
 --
-set_xmakever("2.7.2")
+set_xmakever("2.8.3")
 
 local dir = ""
 local rcfiles = os.getenv("XMAKE_RCFILES")

@@ -21,8 +21,6 @@
 -- ------------   ----------   -----------------------------------------------
 -- 2023-08-01     xqyjlj       initial version
 --
-set_xmakever("2.7.2")
-
 rule("csp.cpu")
 do
     on_config(function(target)

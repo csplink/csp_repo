@@ -21,8 +21,6 @@
 -- ------------   ----------   -----------------------------------------------
 -- 2023-02-19     xqyjlj       initial version
 --
-set_xmakever("2.7.2")
-
 rule("csp.map")
 do
     on_config(function(target)
