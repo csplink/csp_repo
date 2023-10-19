@@ -14,14 +14,26 @@
 -- Copyright (C) 2022-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        tasks.lua
+-- @file        xmake.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
--- 2023-02-22     xqyjlj       add sdk
--- 2023-02-21     xqyjlj       initial version
+-- 2023-10-19     xqyjlj     initial version
 --
-for _, file in ipairs(os.files(path.join(os.scriptdir(), "tasks", "*", "xmake.lua"))) do
-    includes(file)
+
+task("csp-project")
+do
+    on_run("main")
+    set_category("plugin")
+    set_menu {
+        usage = "xmake csp-project [options]",
+        description = "Generate the project file.",
+        options = {
+            {"k",   "kind",             "kv",   "cmake",                                    "Set the project kind.",
+                                                                                            "    - cmake",},
+            {nil,   "outputdir",        "v",    ".",                                        "Set the output directory."},
+        }
+    }
 end
+task_end()

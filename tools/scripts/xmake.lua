@@ -34,6 +34,8 @@ end
 add_repositories("csp-repo " .. dir .. "../../repo")
 
 includes(dir .. "flags.lua")
+includes(dir .. "modules.lua")
+includes(dir .. "options.lua")
 includes(dir .. "rules.lua")
 includes(dir .. "toolchains.lua")
 includes(dir .. "tasks.lua")

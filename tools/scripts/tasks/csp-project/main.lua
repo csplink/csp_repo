@@ -14,14 +14,33 @@
 -- Copyright (C) 2022-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        tasks.lua
+-- @file        main.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
--- 2023-02-22     xqyjlj       add sdk
--- 2023-02-21     xqyjlj       initial version
+-- 2023-10-15     xqyjlj       copy from RT-Thread
+-- 2023-10-16     xqyjlj       initial version
 --
-for _, file in ipairs(os.files(path.join(os.scriptdir(), "tasks", "*", "xmake.lua"))) do
-    includes(file)
+-- imports
+import("core.base.option")
+import("core.project.config")
+import("core.project.project")
+import("cmake.cmakelists")
+
+function makers()
+    return {cmake = cmakelists.main, cmakelists = cmakelists.main}
+end
+
+function _make(kind)
+    local maps = makers()
+    assert(maps[kind], "the project kind(%s) is not supported!", kind)
+    maps[kind](option.get("outputdir"))
+end
+
+function main()
+    config.load()
+    project.load_targets()
+    _make(option.get("kind"))
+    cprint("${color.success}create ok!")
 end

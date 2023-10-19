@@ -14,14 +14,13 @@
 -- Copyright (C) 2022-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        tasks.lua
+-- @file        options.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
--- 2023-02-22     xqyjlj       add sdk
--- 2023-02-21     xqyjlj       initial version
+-- 2023-08-20     xqyjlj       initial version
 --
-for _, file in ipairs(os.files(path.join(os.scriptdir(), "tasks", "*", "xmake.lua"))) do
+for _, file in ipairs(os.files(path.join(os.scriptdir(), "options", "*lua"))) do
     includes(file)
 end
