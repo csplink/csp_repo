@@ -316,6 +316,22 @@ function _generate_toolchains(cmakelists, target)
             cmakelists:print("set(CMAKE_CXX_COMPILER \"%s\")", cxx)
             cmakelists:print("set(CMAKE_CXX_COMPILER_WORKS TRUE)")
         end
+        local toolchains = target:get("toolchains")
+        if string.find(toolchains, "armcc") or string.find(toolchains, "armclang") then
+            local fromelf, _ = target:tool("fromelf")
+            if fromelf then
+                cmakelists:print("set(CMAKE_FROMELF \"%s\")", fromelf)
+            end
+        else
+            local objcopy, _ = target:tool("objcopy")
+            if objcopy then
+                cmakelists:print("set(CMAKE_OBJCOPY \"%s\")", objcopy)
+            end
+            local size, _ = target:tool("size")
+            if size then
+                cmakelists:print("set(CMAKE_SIZE \"%s\")", size)
+            end
+        end
         cmakelists:print("")
     end
 end
@@ -335,6 +351,35 @@ function _generate_target_phony(cmakelists, target)
     cmakelists:print("")
 end
 
+-- generate rule bin<hex>
+function _generate_rule_bin(cmakelists, target, outputdir)
+    cmakelists:print("add_custom_command(TARGET %s POST_BUILD", target:name())
+    local toolchains = target:get("toolchains")
+    if string.find(toolchains, "armcc") or string.find(toolchains, "armclang") then
+        cmakelists:print("    COMMAND ${CMAKE_FROMELF} --bin %s/%s --output %s/%s.bin", targetdir, target:filename(),
+                         targetdir, target:name())
+        cmakelists:print("    COMMAND ${CMAKE_FROMELF} --i32 %s/%s --output %s/%s.hex", targetdir, target:filename(),
+                         targetdir, target:name())
+    else
+        local targetdir = _get_relative_unix_path_to_cmake(target:targetdir(), outputdir)
+        cmakelists:print("    COMMAND ${CMAKE_OBJCOPY} -O binary %s/%s %s/%s.bin", targetdir, target:filename(),
+                         targetdir, target:name())
+        cmakelists:print("    COMMAND ${CMAKE_OBJCOPY} -O ihex %s/%s %s/%s.hex", targetdir, target:filename(),
+                         targetdir, target:name())
+        cmakelists:print("    COMMAND ${CMAKE_SIZE} --format=berkeley %s/%s", targetdir, target:filename())
+    end
+    cmakelists:print(")")
+end
+
+-- generate rule<only csp command>
+function _generate_rule(cmakelists, target, outputdir)
+    local rules = target:get("rules")
+    if rules and table.contains(rules, "csp.bin") then
+        -- generate rule bin<hex>
+        _generate_rule_bin(cmakelists, target, outputdir)
+    end
+end
+
 -- generate target: binary
 function _generate_target_binary(cmakelists, target, outputdir)
     cmakelists:print("# target binary <%s>", target:name())
@@ -342,6 +387,7 @@ function _generate_target_binary(cmakelists, target, outputdir)
     cmakelists:print("set_target_properties(%s PROPERTIES OUTPUT_NAME \"%s\")", target:name(), target:filename())
     cmakelists:print("set_target_properties(%s PROPERTIES RUNTIME_OUTPUT_DIRECTORY \"%s\")", target:name(),
                      _get_relative_unix_path_to_cmake(target:targetdir(), outputdir))
+    _generate_rule(cmakelists, target, outputdir)
 end
 
 -- generate target: static
