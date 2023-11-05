@@ -27,6 +27,7 @@ import("core.base.option")
 import("core.project.config")
 import("core.project.project")
 import("cmake.cmakelists")
+import("core.base.task")
 
 function makers()
     return {cmake = cmakelists.main, cmakelists = cmakelists.main}
@@ -39,6 +40,7 @@ function _make(kind)
 end
 
 function main()
+    task.run("config") -- config it first
     config.load()
     project.load_targets()
     _make(option.get("kind"))

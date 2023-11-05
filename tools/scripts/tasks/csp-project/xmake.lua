@@ -31,7 +31,8 @@ do
         description = "Generate the project file.",
         options = {
             {"k",   "kind",             "kv",   "cmake",                                    "Set the project kind.",
-                                                                                            "    - cmake",},
+                                                                                            "    - cmake",
+                                                                                            "    - cmakelists",},
             {nil,   "outputdir",        "v",    ".",                                        "Set the output directory."},
         }
     }
