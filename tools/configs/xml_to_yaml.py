@@ -54,7 +54,7 @@ example:
             <Functions>
                 <Function Name="FSMC-A23" />
                 <Function Name="SYS-TRACECLK" />
-                <Function Name="GPIO-Input" Type="GPIO" Mode="Input-Std" />
+                <Function Name="GPIO-Input" Type="GPIO" Mode="std:input" />
                 <Function Name="GPIO-Output" Type="GPIO" Mode="Output-Std" />
                 <Function Name="GPIO-Analog" Type="GPIO" Mode="Analog-Std" />
                 <Function Name="EVENTOUT" Type="GPIO" Mode="Eventout-Std" />
