@@ -21,7 +21,7 @@
 -- ------------   ----------   -----------------------------------------------
 -- 2023-12-17     xqyjlj       initial version
 --
-set_xmakever("2.8.3")
+set_xmakever("2.8.6")
 
 local dir = ""
 local rcfiles = os.getenv("XMAKE_RCFILES")
@@ -29,7 +29,7 @@ if rcfiles then
     dir = path.directory(rcfiles) .. "/"
 end
 
-add_repositories("csp-repo " .. dir .. "../../repo")
+add_repositories("csp-repo " .. dir .. "../..")
 
 includes(dir .. "flags.lua")
 includes(dir .. "modules.lua")
