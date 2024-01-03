@@ -21,50 +21,63 @@
 -- ------------   ----------   -----------------------------------------------
 -- 2024-01-03     xqyjlj       initial version
 --
+import("core.project.config")
+import("core.base.option")
+import("core.project.project")
 import("core.package.package")
 import("private.action.require.impl.utils.filter")
 import("devel.git")
 
-function main()
-    -- show urls
-    for _, packagedir in ipairs(os.dirs(path.absolute(path.join(os.scriptdir(), "..", "packages", "*", "*")))) do
-        local packagename = path.filename(packagedir)
-        local packagefile = path.join(packagedir, "xmake.lua")
-        local packageinstance = package.load_from_repository(packagename, packagedir, {packagefile = packagefile})
-        local on_load = packageinstance:get("load")
-        if on_load then
-            on_load(packageinstance)
-        end
-        -- show urls
-        local instance = packageinstance
-        local urls = instance:urls()
-        if instance:is_precompiled() then
-            instance:fallback_build()
-            local urls_raw = instance:urls()
-            if urls_raw then
-                urls = table.join(urls, urls_raw)
-            end
-        end
-        -- print(packageinstance:get("versions"))
+function get_download_url(packagename, version)
+    version = version or "latest"
+    local rootdir = path.absolute(path.join(os.scriptdir(), "..", "..", "..", ".."))
+    local packagedir = path.join(rootdir, "packages", string.sub(packagename, 1, 1), packagename)
+    local packagefile = path.join(packagedir, "xmake.lua")
 
-        if urls and #urls > 0 then
-            cprint("      -> ${color.dump.string_quote}urls${clear}:")
-            for _, url in ipairs(urls) do
-                for version, _ in pairs(packageinstance:get("versions")) do
-                    instance:version_set(version)
-                    print("         -> %s", filter.handle(url, instance))
-                    if git.asgiturl(url) then
-                        local url_alias = instance:url_alias(url)
-                        cprint("            -> ${yellow}%s",
-                               instance:revision(url_alias) or instance:tag() or instance:version_str())
-                    else
-                        local sourcehash = instance:sourcehash(instance:url_alias(url))
-                        if sourcehash then
-                            cprint("            -> ${yellow}%s", sourcehash)
-                        end
-                    end
-                end
+    local instance = package.load_from_repository(packagename, packagedir, {packagefile = packagefile})
+    local on_load = instance:get("load")
+    if on_load then
+        on_load(instance)
+    end
+
+    local urls = instance:urls()
+    if instance:is_precompiled() then
+        instance:fallback_build()
+        local urls_raw = instance:urls()
+        if urls_raw then
+            urls = table.join(urls, urls_raw)
+        end
+    end
+
+    local rtn = {}
+    if version == "latest" then
+        for _, url in ipairs(urls) do
+            local u = git.asgiturl(url)
+            if u then
+                table.insert(rtn, u)
             end
         end
+    else
+        local versions = instance:get("versions")
+        local version_keys = table.orderkeys(versions)
+        assert(table.contains(version_keys, version), "invalid version \"%s\" in {\"%s\"}", version,
+               table.concat(version_keys, "\", \""))
+
+        instance:version_set(version)
+        for _, url in ipairs(urls) do
+            if not git.asgiturl(url) then
+                table.insert(rtn, filter.handle(url, instance))
+            end
+        end
+    end
+
+    return rtn
+end
+
+function main()
+    config.load()
+    project.load_targets()
+
+    if option.get("list") then
     end
 end

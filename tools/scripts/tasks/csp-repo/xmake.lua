@@ -30,10 +30,7 @@ do
         usage = "xmake csp-repo [options]",
         description = "Manage package repositories.",
         options = {
-            {"k",   "kind",             "kv",   "cmake",                                    "Set the project kind.",
-                                                                                            "    - cmake",
-                                                                                            "    - cmakelists",},
-            {nil,   "outputdir",        "v",    ".",                                        "Set the output directory."},
+            {"l",   "list",             "k",    nil,                                "List all installed packages."},
         }
     }
     -- LuaFormatter on
