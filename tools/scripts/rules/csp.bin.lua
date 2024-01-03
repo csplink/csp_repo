@@ -1,9 +1,9 @@
 --
--- Licensed under the Apache License, Version 2.0 (the "License");
+-- Licensed under the GNU General Public License v. 3 (the "License");
 -- You may not use this file except in compliance with the License.
 -- You may obtain a copy of the License at
 --
---     http://www.apache.org/licenses/LICENSE-2.0
+--     https://www.gnu.org/licenses/gpl-3.0.html
 --
 -- Unless required by applicable law or agreed to in writing, software
 -- distributed under the License is distributed on an "AS IS" BASIS,
@@ -11,18 +11,16 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 --
--- Copyright (C) 2022-2023 xqyjlj<xqyjlj@126.com>
+-- Copyright (C) 2023-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        csp_bin.lua
+-- @file        csp.bin.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
 -- 2023-02-19     xqyjlj       initial version
 --
-set_xmakever("2.7.2")
-
 rule("csp.bin")
 do
     after_link(function(target)

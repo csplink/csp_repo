@@ -14,11 +14,14 @@
 -- Copyright (C) 2023-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        modules.lua
+-- @file        xmake.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
--- 2023-08-01     xqyjlj       initial version
+-- 2023-07-03     xqyjlj       initial version
 --
-add_moduledirs(path.join(os.scriptdir(), "modules"))
+
+set_xmakever("2.8.6")
+
+set_description("The official package repository of csplink")

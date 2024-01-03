@@ -1,9 +1,9 @@
 --
--- Licensed under the Apache License, Version 2.0 (the "License");
+-- Licensed under the GNU General Public License v. 3 (the "License");
 -- You may not use this file except in compliance with the License.
 -- You may obtain a copy of the License at
 --
---     http://www.apache.org/licenses/LICENSE-2.0
+--     https://www.gnu.org/licenses/gpl-3.0.html
 --
 -- Unless required by applicable law or agreed to in writing, software
 -- distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,11 +21,12 @@
 -- ------------   ----------   -----------------------------------------------
 -- 2023-07-03     xqyjlj       initial version
 --
-
 package("csp_hal_apm32f1")
 do
     set_homepage("https://github.com/csplink/csp_hal_apm32f1")
     set_description("APM32F1 SDK.")
+    set_kind("library")
+    set_license("Apache-2.0")
 
     add_urls("https://github.com/csplink/csp_hal_apm32f1/archive/$(version).tar.gz")
     add_urls("https://github.com/csplink/csp_hal_apm32f1.git")

@@ -14,11 +14,27 @@
 -- Copyright (C) 2023-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        modules.lua
+-- @file        xmake.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
--- 2023-08-01     xqyjlj       initial version
+-- 2023-12-17     xqyjlj       initial version
 --
-add_moduledirs(path.join(os.scriptdir(), "modules"))
+
+task("csp-project")
+do
+    on_run("main")
+    set_category("plugin")
+    set_menu {
+        usage = "xmake csp-project [options]",
+        description = "Generate the project file.",
+        options = {
+            {"k",   "kind",             "kv",   "cmake",                                    "Set the project kind.",
+                                                                                            "    - cmake",
+                                                                                            "    - cmakelists",},
+            {nil,   "outputdir",        "v",    ".",                                        "Set the output directory."},
+        }
+    }
+end
+task_end()

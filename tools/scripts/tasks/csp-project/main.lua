@@ -14,11 +14,34 @@
 -- Copyright (C) 2023-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        modules.lua
+-- @file        main.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
--- 2023-08-01     xqyjlj       initial version
+-- 2023-12-17     xqyjlj       initial version
 --
-add_moduledirs(path.join(os.scriptdir(), "modules"))
+-- imports
+import("core.base.option")
+import("core.project.config")
+import("core.project.project")
+import("cmake.cmakelists")
+import("core.base.task")
+
+function makers()
+    return {cmake = cmakelists.main, cmakelists = cmakelists.main}
+end
+
+function _make(kind)
+    local maps = makers()
+    assert(maps[kind], "the project kind(%s) is not supported!", kind)
+    maps[kind](option.get("outputdir"))
+end
+
+function main()
+    task.run("config") -- config it first
+    config.load()
+    project.load_targets()
+    _make(option.get("kind"))
+    cprint("${color.success}create ok!")
+end

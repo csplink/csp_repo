@@ -14,11 +14,32 @@
 -- Copyright (C) 2023-2023 xqyjlj<xqyjlj@126.com>
 --
 -- @author      xqyjlj
--- @file        modules.lua
+-- @file        xmake.lua
 --
 -- Change Logs:
 -- Date           Author       Notes
 -- ------------   ----------   -----------------------------------------------
--- 2023-08-01     xqyjlj       initial version
+-- 2023-12-17     xqyjlj       initial version
 --
-add_moduledirs(path.join(os.scriptdir(), "modules"))
+
+function _project_menu_options()
+    import("core.project.menu")
+    return menu.options()
+end
+
+task("csp-config")
+do
+    on_run("main")
+    set_category("plugin")
+    set_menu {
+        usage = "xmake csp-config [options]",
+        description = "Configure the project.",
+        options = {
+            {nil,   "menu",             "k",    nil,                                        "Configure project with a menu-driven user interface."},
+            {},
+            {category = "Project Configuration"},
+            _project_menu_options,
+        }
+    }
+end
+task_end()
