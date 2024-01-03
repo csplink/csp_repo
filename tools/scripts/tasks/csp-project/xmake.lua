@@ -21,11 +21,11 @@
 -- ------------   ----------   -----------------------------------------------
 -- 2023-12-17     xqyjlj       initial version
 --
-
 task("csp-project")
 do
     on_run("main")
     set_category("plugin")
+    -- LuaFormatter off
     set_menu {
         usage = "xmake csp-project [options]",
         description = "Generate the project file.",
@@ -36,5 +36,6 @@ do
             {nil,   "outputdir",        "v",    ".",                                        "Set the output directory."},
         }
     }
+    -- LuaFormatter on
 end
 task_end()

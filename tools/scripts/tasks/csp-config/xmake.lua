@@ -21,7 +21,6 @@
 -- ------------   ----------   -----------------------------------------------
 -- 2023-12-17     xqyjlj       initial version
 --
-
 function _project_menu_options()
     import("core.project.menu")
     return menu.options()
@@ -31,6 +30,7 @@ task("csp-config")
 do
     on_run("main")
     set_category("plugin")
+    -- LuaFormatter off
     set_menu {
         usage = "xmake csp-config [options]",
         description = "Configure the project.",
@@ -41,5 +41,6 @@ do
             _project_menu_options,
         }
     }
+    -- LuaFormatter on
 end
 task_end()

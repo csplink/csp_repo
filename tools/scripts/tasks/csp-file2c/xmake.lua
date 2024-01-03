@@ -21,11 +21,11 @@
 -- ------------   ----------   -----------------------------------------------
 -- 2023-12-17     xqyjlj       initial version
 --
-
 task("csp-file2c")
 do
     on_run("main")
     set_category("plugin")
+    -- LuaFormatter off
     set_menu {
         usage = "xmake csp-file2c [options]",
         description = "Convert file to array of C files",
@@ -38,5 +38,6 @@ do
             {"u",   "unit",             "kv",   4,                                          "Eemory unit size.",},
         }
     }
+    -- LuaFormatter on
 end
 task_end()
