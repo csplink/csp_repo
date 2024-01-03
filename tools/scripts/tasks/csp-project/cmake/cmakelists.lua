@@ -319,15 +319,18 @@ function _generate_toolchains(cmakelists, target)
         if string.find(toolchains, "armcc") or string.find(toolchains, "armclang") then
             local fromelf, _ = target:tool("fromelf")
             if fromelf then
+                fromelf = fromelf:gsub("\\", "/")
                 cmakelists:print("set(CMAKE_FROMELF \"%s\")", fromelf)
             end
         else
             local objcopy, _ = target:tool("objcopy")
             if objcopy then
+                objcopy = objcopy:gsub("\\", "/")
                 cmakelists:print("set(CMAKE_OBJCOPY \"%s\")", objcopy)
             end
             local size, _ = target:tool("size")
             if size then
+                size = size:gsub("\\", "/")
                 cmakelists:print("set(CMAKE_SIZE \"%s\")", size)
             end
         end
