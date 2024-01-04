@@ -30,7 +30,20 @@ do
         usage = "xmake csp-repo [options]",
         description = "Manage package repositories.",
         options = {
-            {"l",   "list",             "k",    nil,                                "List all installed packages."},
+            {"l",   "list",             "kv",   nil,        "List all installed packages.",
+                                                            "    - json",
+                                                            "    - table",},
+            {"d",   "dump",             "kv",   nil,        "Dump all packages.",
+                                                            "    - json",
+                                                            "    - table",},
+            {nil,   "install",          "kv",   nil,        "Install the packages.",
+                                                            "e.g.",
+                                                            "    - xmake csp-repo --install=csp_hal_apm32f1@latest -r {dir}"},
+            {nil,   "uninstall",        "kv",   nil,        "Uninstall the installed packages.",
+                                                            "e.g.",
+                                                            "    - xmake csp-repo --uninstall=csp_hal_apm32f1@latest -r {dir}"},
+            {"r",   "repositories",     "kv",   nil,        "Set the repositories dir."},
+
         }
     }
     -- LuaFormatter on
