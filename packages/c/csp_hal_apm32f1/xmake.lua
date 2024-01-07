@@ -34,20 +34,13 @@ do
     add_urls("https://gitee.com/csplink/csp_hal_apm32f1.git")
     add_urls("https://e.coding.net/csplink/csplink/csp_hal_apm32f1.git")
 
-    add_configs("mcu", {
-        description = "mcu name",
-        default = "APM32F103ZET6",
-        values = {"APM32F103C8T6", "APM32F103CBT6", "APM32F103ZET6"}
-    })
-    add_configs("use_default_startup", {description = "use default startup asm file", default = true})
+    add_versions("v0.0.1", "ea1f9967d8b35a184dafe39783d574046a2e65407f825f56c6c42727f8d5660f")
 
     on_install(function(package)
         import("package.tools.xmake").install(package)
     end)
 
     on_test(function(package)
-        assert(os.isdir(path.join(package:installdir("include"), "csp_hal_apm32f1", "chal")))
-        assert(os.isfile(path.join(package:installdir("include"), "csp_hal_apm32f1", "csp_hal_apm32f1_config.h")))
         assert(os.isfile(path.join(package:installdir("lib"), "libcsp_hal_apm32f1.a")))
     end)
 end

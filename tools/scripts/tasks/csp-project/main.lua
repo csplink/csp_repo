@@ -29,7 +29,13 @@ import("cmake.cmakelists")
 import("core.base.task")
 
 function makers()
-    return {cmake = cmakelists.main, cmakelists = cmakelists.main}
+    -- LuaFormatter off
+    return
+    {
+        cmake = cmakelists.main,
+        cmakelists = cmakelists.main
+    }
+    -- LuaFormatter on
 end
 
 function _make(kind)
