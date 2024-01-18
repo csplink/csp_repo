@@ -284,7 +284,6 @@ function _generate(proj, outputdir, repositories_dir)
     local name = proj.core.target
     local modules = proj.core.modules
     local coder = find_coder(hal, name, repositories_dir)
-    assert(#modules > 0, "modules is empty")
     modules = table.unique(modules)
     for _, kind in ipairs(modules) do
         _generate_h(proj, coder, kind, outputdir)
