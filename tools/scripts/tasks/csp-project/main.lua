@@ -27,13 +27,15 @@ import("core.project.config")
 import("core.project.project")
 import("cmake.cmakelists")
 import("core.base.task")
+import("mdk.uvprojx")
 
 function makers()
     -- LuaFormatter off
     return
     {
         cmake = cmakelists.main,
-        cmakelists = cmakelists.main
+        cmakelists = cmakelists.main,
+        uvprojx = uvprojx.main,
     }
     -- LuaFormatter on
 end
