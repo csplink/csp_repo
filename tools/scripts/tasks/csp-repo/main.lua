@@ -101,9 +101,17 @@ end
 
 function dump_table()
     local packagelist = {toolchain = {}, library = {}}
+    local repositories_dir = option.get("repositories")
+    local installed_list = nil
+
+    if repositories_dir then
+        installed_list = list_table(repositories_dir)
+    end
+
     for _, packagedir in ipairs(os.dirs(path.join(rootdir, "packages", "*", "*"))) do
         local packagename = path.filename(packagedir)
         local packagefile = path.join(packagedir, "xmake.lua")
+        local manifestfile = path.join(packagedir, "manifest.json")
         local packageinstance = package.load_from_repository(packagename, packagedir, {packagefile = packagefile})
         local on_load = packageinstance:get("load")
         if on_load then
@@ -111,7 +119,7 @@ function dump_table()
         end
         local pkg = {}
         local urls = packageinstance:get("urls") or os.raise("%s urls is empty", packagename)
-        local versions = packageinstance:get("versions") or {latest = "nil"}
+        local versions = packageinstance:get("versions") or {latest = "nil", sha256 = "unknown"}
         local description = packageinstance:get("description") or "unknown"
         local homepage = packageinstance:get("homepage") or "unknown"
         local license = packageinstance:get("license") or "unknown"
@@ -122,10 +130,27 @@ function dump_table()
             pkg["urls"] = {urls}
         end
 
-        pkg["versions"] = packageinstance:get("versions") or {latest = "nil"}
         pkg["description"] = description
         pkg["homepage"] = homepage
         pkg["license"] = license
+
+        if os.isfile(manifestfile) then
+            manifest = json.loadfile(manifestfile)
+            pkg["company"] = manifest["company"]
+            pkg["versions"] = manifest["versions"]
+        else
+            pkg["company"] = "unknown"
+            pkg["versions"] = {}
+        end
+
+        for version, version_info in pairs(pkg["versions"]) do
+            version_info["sha256"] = versions[version] or "unknown"
+            if installed_list and installed_list[packagename] and installed_list[packagename][version] then
+                version_info["installed"] = true
+            else
+                version_info["installed"] = false
+            end
+        end
 
         if packageinstance:get("kind") then
             packagelist[packageinstance:get("kind")][packagename] = pkg

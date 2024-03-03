@@ -1,0 +1,11 @@
+{
+    "company": "Geehy",
+    "versions": {
+        "latest": {
+            "size": 0
+        },
+        "v0.0.1": {
+            "size": 14.8
+        }
+    }
+}
