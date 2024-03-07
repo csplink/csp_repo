@@ -33,7 +33,17 @@ import("net.http")
 import("utils.archive")
 
 local rootdir = path.absolute(path.join(os.scriptdir(), "..", "..", "..", ".."))
+local packages_json_file = ""
+local packages_json = {}
 
+function load_packages_json()
+    packages_json_file = path.join(option.get("repositories"), "packages.json")
+    if os.isfile(packages_json_file) then
+        packages_json = json.loadfile(packages_json_file)
+    end
+end
+
+-- get download url from package xmake
 function get_download_url(packagename, version)
     version = version or "latest"
     local packagedir = path.join(rootdir, "packages", string.sub(packagename, 1, 1), packagename)
@@ -65,8 +75,7 @@ function get_download_url(packagename, version)
     else
         local versions = instance:get("versions")
         local version_keys = table.orderkeys(versions)
-        assert(table.contains(version_keys, version), "invalid version \"%s\" in %s:{\"%s\"}", version, packagename,
-               table.concat(version_keys, "\", \""))
+        assert(table.contains(version_keys, version), "invalid version \"%s\" in %s:{\"%s\"}", version, packagename, table.concat(version_keys, "\", \""))
 
         instance:version_set(version)
         for _, url in ipairs(urls) do
@@ -79,24 +88,28 @@ function get_download_url(packagename, version)
     return rtn
 end
 
-function list_table(repositories_dir)
-    local list = {}
-    for _, packagedir in ipairs(os.dirs(path.join(repositories_dir, "*"))) do
-        local hal = path.relative(packagedir, repositories_dir)
-        if not list[hal] then
-            list[hal] = {}
-        end
-        for _, versiondir in ipairs(os.dirs(path.join(packagedir, "*"))) do
-            local version = path.relative(versiondir, packagedir)
-            if os.isdir(path.join(versiondir, ".git")) then
-                local sha = git.lastcommit({repodir = versiondir})
-                list[hal][version] = sha
-            else
-                list[hal][version] = ""
-            end
+-- check installed
+function is_installed(packagename, version)
+    local repositories_dir = option.get("repositories")
+    local installed = false
+    local outputdir = path.join(repositories_dir, packagename, version)
+
+    if packages_json[packagename] and packages_json[packagename][version] and packages_json[packagename][version].installed then
+        if os.isdir(path.join(outputdir, ".csplink")) then
+            installed = true
         end
     end
-    return list
+
+    -- init packages json status
+    if not packages_json[packagename] then
+        packages_json[packagename] = {}
+    end
+    if not packages_json[packagename][version] then
+        packages_json[packagename][version] = {}
+    end
+    packages_json[packagename][version].installed = installed
+
+    return installed
 end
 
 function dump_table()
@@ -104,10 +117,7 @@ function dump_table()
     local repositories_dir = option.get("repositories")
     local installed_list = nil
 
-    if repositories_dir then
-        installed_list = list_table(repositories_dir)
-    end
-
+    -- load package xmake
     for _, packagedir in ipairs(os.dirs(path.join(rootdir, "packages", "*", "*"))) do
         local packagename = path.filename(packagedir)
         local packagefile = path.join(packagedir, "xmake.lua")
@@ -145,104 +155,174 @@ function dump_table()
 
         for version, version_info in pairs(pkg["versions"]) do
             version_info["sha256"] = versions[version] or "unknown"
-            if installed_list and installed_list[packagename] and installed_list[packagename][version] then
+            if is_installed(packagename, version) then
                 version_info["installed"] = true
             else
                 version_info["installed"] = false
             end
         end
 
+        -- add to kind
         if packageinstance:get("kind") then
             packagelist[packageinstance:get("kind")][packagename] = pkg
         else
             packagelist["library"][packagename] = pkg
         end
     end
+
+    local value = option.get("dump")
+    if value == "json" then
+        print(json.encode(packagelist))
+    elseif value == "table" then
+        print(packagelist)
+    else
+        assert(false, "invalid type \"%s\"", value)
+    end
+
     return packagelist
 end
 
-function is_installed(packagename, version, repositories_dir)
-    return os.isdir(path.join(repositories_dir, packagename, version))
-end
-
-function install(packagename, version, repositories_dir)
+function install(packagename, version)
+    local repositories_dir = option.get("repositories")
     local urls = get_download_url(packagename, version)
     local outputdir = path.join(repositories_dir, packagename, version)
+
+    -- get fast url
     local download_urls = table.orderkeys(urls)
     fasturl.add(download_urls)
     download_urls = fasturl.sort(download_urls)
     local url = download_urls[1]
-    if git.asgiturl(url) then
-        git.clone(url, {recursive = true, longpaths = true, outputdir = outputdir})
-    else
-        local file = path.join(repositories_dir, packagename, (path.filename(url):gsub("%?.+$", "")))
-        http.download(url, file)
-        local sourcehash = urls[url]
-        local sha256 = hash.sha256(file)
-        if sha256 == sourcehash then
-            local tmp = repositories_dir .. ".tmp"
-            archive.extract(file, tmp)
-            local filedirs = os.filedirs(path.join(tmp, "*"))
-            if #filedirs == 1 and os.isdir(filedirs[1]) then
-                os.mv(filedirs[1], outputdir)
-                os.rm(tmp)
-            else
-                os.mv(tmp, outputdir)
-            end
+
+    -- check installed
+    local installed = is_installed(packagename, version)
+
+    -- install
+    if not installed then
+        -- frist rm output dir
+        os.tryrm(outputdir)
+
+        if git.asgiturl(url) then
+            -- git clone
+            git.clone(url, {recursive = true, longpaths = true, outputdir = outputdir})
         else
-            raise("unmatched checksum, current hash(%s) != original hash(%s)", sha256:sub(1, 8), sourcehash:sub(1, 8))
+            local pkg_file = path.join(repositories_dir, packagename, (path.filename(url):gsub("%?.+$", "")))
+            -- frist rm package file
+            os.tryrm(pkg_file)
+            print("download from %s", url)
+
+            -- http download
+            http.download(url, pkg_file)
+            local sourcehash = urls[url]
+            local sha256 = hash.sha256(pkg_file)
+            if sha256 == sourcehash then
+                local tmp = path.join(repositories_dir, ".tmp")
+                print("extract file %s to %s", pkg_file, tmp)
+                archive.extract(pkg_file, tmp)
+                local filedirs = os.filedirs(path.join(tmp, "*"))
+                if #filedirs == 1 and os.isdir(filedirs[1]) then
+                    os.mv(filedirs[1], outputdir)
+                    os.rm(tmp)
+                else
+                    os.mv(tmp, outputdir)
+                end
+            else
+                raise("unmatched checksum, current hash(%s) != original hash(%s)", sha256:sub(1, 8), sourcehash:sub(1, 8))
+            end
         end
+
+        -- mkdir .csplink
+        if os.isdir(outputdir) and not os.isdir(path.join(outputdir, ".csplink")) then
+            os.mkdir(path.join(outputdir, ".csplink"))
+        end
+
+        -- check installed
+        if os.isdir(path.join(outputdir, ".csplink")) then
+            installed = true
+        end
+        if installed then
+            packages_json[packagename][version].installed = true
+            print("%s@%s install successful", packagename, version)
+        else
+            raise("%s@%s install failed", packagename, version)
+        end
+    else
+        print("%s@%s already installed", packagename, version)
+    end
+
+    -- update packages.json
+    json.savefile(packages_json_file, packages_json)
+end
+
+function update()
+    local packagename = option.get("update")
+    local repositories_dir = option.get("repositories")
+    local installed = is_installed(packagename, "latest")
+
+    -- update
+    if installed then
+        local outputdir = path.join(repositories_dir, packagename, "latest")
+        git.pull({repodir = outputdir})
+        print("%s@%s update successful", packagename, "latest")
+    else
+        print("%s@%s not yet installed", packagename, "latest")
     end
 end
 
-function uninstall(packagename, version, repositories_dir)
-    if is_installed(packagename, version, repositories_dir) then
+function uninstall(packagename, version)
+    local repositories_dir = option.get("repositories")
+
+    -- check installed
+    local installed = is_installed(packagename, version)
+
+    --  uninstalled
+    if installed then
         os.rm(path.join(repositories_dir, packagename, version))
+
+        -- check installed
+        if not os.isdir(path.join(outputdir, ".csplink")) then
+            installed = false
+        end
+        if not installed then
+            packages_json[packagename][version].installed = false
+            print("%s@%s uninstall successful", packagename, version)
+        else
+            raise("%s@%s uninstall failed", packagename, version)
+        end
+    else
+        print("%s@%s not yet installed", packagename, version)
     end
+
+    -- update packages.json
+    json.savefile(packages_json_file, packages_json)
 end
 
 function main()
     config.load()
     project.load_targets()
 
-    if option.get("list") then
-        assert(option.get("repositories"), "must set repositories dir")
-        local value = option.get("list")
-        if value == "json" then
-            local list = list_table(option.get("repositories"))
-            print(json.encode(list))
-        elseif value == "table" then
-            local list = list_table(option.get("repositories"))
-            print(list)
-        else
-            assert(false, "invalid type \"%s\"", value)
-        end
-    elseif option.get("dump") then
-        local value = option.get("dump")
-        if value == "json" then
-            local list = dump_table()
-            print(json.encode(list))
-        elseif value == "table" then
-            local list = dump_table()
-            print(list)
-        else
-            assert(false, "invalid type \"%s\"", value)
-        end
+    assert(option.get("repositories"), "must set repositories dir")
+
+    if option.get("dump") then
+        load_packages_json()
+        dump_table()
     elseif option.get("install") then
-        assert(option.get("repositories"), "must set repositories dir")
         local value = option.get("install")
         local list = value:split("@")
         assert(#list == 2, "invalid input \"%s\", eq. xmake csp-repo --install=csp_hal_apm32f1@latest -r {dir}", value)
         local packagename = list[1]
         local version = list[2]
-        install(packagename, version, option.get("repositories"))
+        load_packages_json()
+        install(packagename, version)
+    elseif option.get("update") then
+        load_packages_json()
+        update()
     elseif option.get("uninstall") then
-        assert(option.get("repositories"), "must set repositories dir")
         local value = option.get("uninstall")
         local list = value:split("@")
         assert(#list == 2, "invalid input \"%s\", eq. xmake csp-repo --uninstall=csp_hal_apm32f1@latest -r {dir}", value)
         local packagename = list[1]
         local version = list[2]
-        uninstall(packagename, version, option.get("repositories"))
+        load_packages_json()
+        uninstall(packagename, version)
     end
 end
