@@ -36,13 +36,11 @@ do
         toolchain:set("toolset", "objcopy", "arm-none-eabi-objcopy")
         toolchain:set("toolset", "size", "arm-none-eabi-size")
 
-        toolchain:add("cxflags", "-mthumb", "-mthumb-interwork", "-ffunction-sections", "-fdata-sections",
-                      "-fno-common", "-fmessage-length=0", {force = true})
-        toolchain:add("asflags", "-mthumb", "-mthumb-interwork", "-ffunction-sections", "-fdata-sections",
-                      "-fno-common", "-fmessage-length=0", "-x", " assembler-with-cpp", {force = true})
-        toolchain:add("ldflags", "-mthumb", "-mthumb-interwork", "-ffunction-sections", "-fdata-sections",
-                      "-fno-common", "-fmessage-length=0", "-Wl,--gc-sections", "-Wl,--print-memory-usage",
+        toolchain:add("cxflags", "-mthumb", "-mthumb-interwork", "-ffunction-sections", "-fdata-sections", "-fno-common", "-fmessage-length=0", {force = true})
+        toolchain:add("asflags", "-mthumb", "-mthumb-interwork", "-ffunction-sections", "-fdata-sections", "-fno-common", "-fmessage-length=0", "-x", " assembler-with-cpp",
                       {force = true})
+        toolchain:add("ldflags", "-mthumb", "-mthumb-interwork", "-ffunction-sections", "-fdata-sections", "-fno-common", "-fmessage-length=0", "-Wl,--gc-sections",
+                      "-Wl,--print-memory-usage", {force = true})
     end)
 end
 toolchain_end()

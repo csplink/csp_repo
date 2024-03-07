@@ -139,9 +139,9 @@ local _export_project = function(outputdir)
             for _, includedir in ipairs(includedirs) do
                 table.insert(config_json["IncludePath"], _get_relative_unix_path(includedir, outputdir))
             end
-            
+
         end
-        local includedirs_interface = target:get("includedirs", { interface = true })
+        local includedirs_interface = target:get("includedirs", {interface = true})
         if includedirs_interface then
             for _, headerdir in ipairs(includedirs_interface) do
                 table.insert(config_json["IncludePath"], _get_relative_unix_path(headerdir, outputdir))
@@ -171,7 +171,7 @@ function main(outputdir)
         csp2mdk_command = find_file("csp2mdk", XMAKE_RCFILES)
     end
 
-    local target_name = function ()
+    local target_name = function()
         for _, target in table.orderpairs(project.targets()) do
             local targetkind = target:kind()
             if targetkind == "binary" then
@@ -181,7 +181,7 @@ function main(outputdir)
     end
     local target_name = target_name()
 
-    os.runv(csp2mdk_command, {"--csp", target_name .. ".csp", "--output", outputdir  })
+    os.runv(csp2mdk_command, {"--csp", target_name .. ".csp", "--output", outputdir})
 
     os.rm(path.join(outputdir, "temp.json"))
     os.cd(oldir)

@@ -58,8 +58,7 @@ function _generate_header(file, proj, coder, user)
     else
         local kind = path.basename(file:path())
         local builtinvars = {}
-        builtinvars.author = string.format("csplink coder: %s(%s)", string.lower(coder.moduledir()),
-                                           string.lower(coder.version()))
+        builtinvars.author = string.format("csplink coder: %s(%s)", string.lower(coder.moduledir()), string.lower(coder.version()))
         builtinvars.file = path.filename(file:path())
         if kind == "main" then
             builtinvars.brief = "main program body"

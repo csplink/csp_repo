@@ -358,16 +358,12 @@ function _generate_rule_bin(cmakelists, target, outputdir)
     cmakelists:print("add_custom_command(TARGET %s POST_BUILD", target:name())
     local toolchains = target:get("toolchains")
     if string.find(toolchains, "armcc") or string.find(toolchains, "armclang") then
-        cmakelists:print("    COMMAND ${CMAKE_FROMELF} --bin %s/%s --output %s/%s.bin", targetdir, target:filename(),
-                         targetdir, target:name())
-        cmakelists:print("    COMMAND ${CMAKE_FROMELF} --i32 %s/%s --output %s/%s.hex", targetdir, target:filename(),
-                         targetdir, target:name())
+        cmakelists:print("    COMMAND ${CMAKE_FROMELF} --bin %s/%s --output %s/%s.bin", targetdir, target:filename(), targetdir, target:name())
+        cmakelists:print("    COMMAND ${CMAKE_FROMELF} --i32 %s/%s --output %s/%s.hex", targetdir, target:filename(), targetdir, target:name())
     else
         local targetdir = _get_relative_unix_path_to_cmake(target:targetdir(), outputdir)
-        cmakelists:print("    COMMAND ${CMAKE_OBJCOPY} -O binary %s/%s %s/%s.bin", targetdir, target:filename(),
-                         targetdir, target:name())
-        cmakelists:print("    COMMAND ${CMAKE_OBJCOPY} -O ihex %s/%s %s/%s.hex", targetdir, target:filename(),
-                         targetdir, target:name())
+        cmakelists:print("    COMMAND ${CMAKE_OBJCOPY} -O binary %s/%s %s/%s.bin", targetdir, target:filename(), targetdir, target:name())
+        cmakelists:print("    COMMAND ${CMAKE_OBJCOPY} -O ihex %s/%s %s/%s.hex", targetdir, target:filename(), targetdir, target:name())
         cmakelists:print("    COMMAND ${CMAKE_SIZE} --format=berkeley %s/%s", targetdir, target:filename())
     end
     cmakelists:print(")")
@@ -387,8 +383,7 @@ function _generate_target_binary(cmakelists, target, outputdir)
     cmakelists:print("# target binary <%s>", target:name())
     cmakelists:print("add_executable(%s \"\")", target:name())
     cmakelists:print("set_target_properties(%s PROPERTIES OUTPUT_NAME \"%s\")", target:name(), target:filename())
-    cmakelists:print("set_target_properties(%s PROPERTIES RUNTIME_OUTPUT_DIRECTORY \"%s\")", target:name(),
-                     _get_relative_unix_path_to_cmake(target:targetdir(), outputdir))
+    cmakelists:print("set_target_properties(%s PROPERTIES RUNTIME_OUTPUT_DIRECTORY \"%s\")", target:name(), _get_relative_unix_path_to_cmake(target:targetdir(), outputdir))
     _generate_rule(cmakelists, target, outputdir)
 end
 
@@ -397,8 +392,7 @@ function _generate_target_static(cmakelists, target, outputdir)
     cmakelists:print("# target static <%s>", target:name())
     cmakelists:print("add_library(%s STATIC \"\")", target:name())
     cmakelists:print("set_target_properties(%s PROPERTIES OUTPUT_NAME \"%s\")", target:name(), target:basename())
-    cmakelists:print("set_target_properties(%s PROPERTIES ARCHIVE_OUTPUT_DIRECTORY \"%s\")", target:name(),
-                     _get_relative_unix_path_to_cmake(target:targetdir(), outputdir))
+    cmakelists:print("set_target_properties(%s PROPERTIES ARCHIVE_OUTPUT_DIRECTORY \"%s\")", target:name(), _get_relative_unix_path_to_cmake(target:targetdir(), outputdir))
 end
 
 -- generate target dependencies
@@ -461,9 +455,7 @@ function _generate_target_sourcefiles_flags(cmakelists, target, sourcefile, name
     if fileconfig then
         local flags = _get_flags_from_fileconfig(fileconfig, outputdir, name)
         if flags and #flags > 0 then
-            cmakelists:print(
-                "set_source_files_properties(" .. _get_relative_unix_path_to_cmake(sourcefile, outputdir) ..
-                    " PROPERTIES COMPILE_OPTIONS")
+            cmakelists:print("set_source_files_properties(" .. _get_relative_unix_path_to_cmake(sourcefile, outputdir) .. " PROPERTIES COMPILE_OPTIONS")
             local flagstrs = {}
             for _, flag in ipairs(flags) do
                 if name == "cxxflags" then
@@ -518,14 +510,7 @@ end
 
 -- generate target warnings
 function _generate_target_warnings(cmakelists, target)
-    local flags_gcc = {
-        none = "-w",
-        less = "-Wall",
-        more = "-Wall",
-        all = "-Wall",
-        allextra = "-Wall -Wextra",
-        error = "-Werror"
-    }
+    local flags_gcc = {none = "-w", less = "-Wall", more = "-Wall", all = "-Wall", allextra = "-Wall -Wextra", error = "-Werror"}
     local warnings = target:get("warnings")
     if warnings then
         for _, warn in ipairs(warnings) do
@@ -579,14 +564,7 @@ end
 
 -- generate target optimization
 function _generate_target_optimization(cmakelists, target)
-    local flags_gcc = {
-        none = "-O0",
-        fast = "-O1",
-        faster = "-O2",
-        fastest = "-O3",
-        smallest = "-Os",
-        aggressive = "-Ofast"
-    }
+    local flags_gcc = {none = "-O0", fast = "-O1", faster = "-O2", fastest = "-O3", smallest = "-Os", aggressive = "-Ofast"}
     local optimization = target:get("optimize")
     if optimization then
         cmakelists:print("target_compile_options(%s PRIVATE %s)", target:name(), flags_gcc[optimization])
@@ -759,22 +737,17 @@ function _generate_target_source_groups(cmakelists, target, outputdir)
         if #sources > 0 then
             cmakelists:print("FILE(GLOB %s_GROUP_SOURCE_LIST %s)", target:name(), table.concat(sources, " "))
             if mode and mode == "plain" then
-                cmakelists:print("source_group(%s FILES ${%s_GROUP_SOURCE_LIST})",
-                                 _get_relative_unix_path(filegroup, outputdir), target:name())
+                cmakelists:print("source_group(%s FILES ${%s_GROUP_SOURCE_LIST})", _get_relative_unix_path(filegroup, outputdir), target:name())
             else
-                cmakelists:print("source_group(TREE %s PREFIX %s FILES ${%s_GROUP_SOURCE_LIST})", rootdir,
-                                 _get_relative_unix_path(filegroup, outputdir), target:name())
+                cmakelists:print("source_group(TREE %s PREFIX %s FILES ${%s_GROUP_SOURCE_LIST})", rootdir, _get_relative_unix_path(filegroup, outputdir), target:name())
             end
         end
         if #recurse_sources > 0 then
-            cmakelists:print("FILE(GLOB_RECURSE %s_GROUP_RECURSE_SOURCE_LIST %s)", target:name(),
-                             table.concat(recurse_sources, " "))
+            cmakelists:print("FILE(GLOB_RECURSE %s_GROUP_RECURSE_SOURCE_LIST %s)", target:name(), table.concat(recurse_sources, " "))
             if mode and mode == "plain" then
-                cmakelists:print("source_group(%s FILES ${%s_GROUP_RECURSE_SOURCE_LIST})",
-                                 _get_relative_unix_path(filegroup, outputdir), target:name())
+                cmakelists:print("source_group(%s FILES ${%s_GROUP_RECURSE_SOURCE_LIST})", _get_relative_unix_path(filegroup, outputdir), target:name())
             else
-                cmakelists:print("source_group(TREE %s PREFIX %s FILES ${%s_GROUP_RECURSE_SOURCE_LIST})", rootdir,
-                                 _get_relative_unix_path(filegroup, outputdir), target:name())
+                cmakelists:print("source_group(TREE %s PREFIX %s FILES ${%s_GROUP_RECURSE_SOURCE_LIST})", rootdir, _get_relative_unix_path(filegroup, outputdir), target:name())
             end
         end
     end

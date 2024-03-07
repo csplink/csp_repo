@@ -30,23 +30,19 @@ do
     local versions = {["v10.2.1"] = "10-2020-q4-major", ["v10.3.1"] = "10.3-2021.10"}
 
     if is_host("windows") then
-        add_urls(
-            "https://github.com/csplink/toolchains/releases/download/arm-none-eabi/gcc-arm-none-eabi-$(version)-win32.zip",
-            {
-                version = function(version)
-                    return versions[version:rawstr()]
-                end
-            })
+        add_urls("https://github.com/csplink/toolchains/releases/download/arm-none-eabi/gcc-arm-none-eabi-$(version)-win32.zip", {
+            version = function(version)
+                return versions[version:rawstr()]
+            end
+        })
         add_versions("v10.2.1", "90057b8737b888c53ca5aee332f1f73c401d6d3873124d2c2906df4347ebef9e")
         add_versions("v10.3.1", "d287439b3090843f3f4e29c7c41f81d958a5323aecefcf705c203bfd8ae3f2e7")
     elseif is_host("linux") then
-        add_urls(
-            "https://github.com/csplink/toolchains/releases/download/arm-none-eabi/gcc-arm-none-eabi-$(version)-x86_64-linux.tar.bz2",
-            {
-                version = function(version)
-                    return versions[version:rawstr()]
-                end
-            })
+        add_urls("https://github.com/csplink/toolchains/releases/download/arm-none-eabi/gcc-arm-none-eabi-$(version)-x86_64-linux.tar.bz2", {
+            version = function(version)
+                return versions[version:rawstr()]
+            end
+        })
         add_versions("v10.2.1", "21134caa478bbf5352e239fbc6e2da3038f8d2207e089efc96c3b55f1edcd618")
         add_versions("v10.3.1", "97dbb4f019ad1650b732faffcc881689cedc14e2b7ee863d390e0a41ef16c9a3")
     end
