@@ -31,6 +31,7 @@ import("devel.git")
 import("net.fasturl")
 import("net.http")
 import("utils.archive")
+import("lib.detect.find_tool")
 
 local rootdir = path.absolute(path.join(os.scriptdir(), "..", "..", "..", ".."))
 local packages_json_file = ""
@@ -112,71 +113,100 @@ function is_installed(packagename, version)
     return installed
 end
 
+-- get package info
+function get_package_info(packagedir)
+    local packagename = path.filename(packagedir)
+    local packagefile = path.join(packagedir, "xmake.lua")
+    local manifestfile = path.join(packagedir, "manifest.json")
+    local packageinstance = package.load_from_repository(packagename, packagedir, {packagefile = packagefile})
+    local on_load = packageinstance:get("load")
+    if on_load then
+        on_load(packageinstance)
+    end
+    local pkg = {}
+    local urls = packageinstance:get("urls") or os.raise("%s urls is empty", packagename)
+    local versions = packageinstance:get("versions") or {latest = "nil", sha = "unknown"}
+    local description = packageinstance:get("description") or "unknown"
+    local homepage = packageinstance:get("homepage") or "unknown"
+    local license = packageinstance:get("license") or "unknown"
+
+    if type(urls) == "table" then
+        pkg["Urls"] = urls
+    else
+        pkg["Urls"] = {urls}
+    end
+
+    pkg["Description"] = description
+    pkg["Homepage"] = homepage
+    pkg["License"] = license
+
+    if os.isfile(manifestfile) then
+        manifest = json.loadfile(manifestfile)
+        pkg["Company"] = manifest["Company"]
+        pkg["Versions"] = manifest["Versions"]
+    else
+        pkg["Company"] = "unknown"
+        pkg["Versions"] = {}
+    end
+
+    for version, version_info in pairs(pkg["Versions"]) do
+        version_info["Sha"] = versions[version] or "unknown"
+        if is_installed(packagename, version) then
+            version_info["Installed"] = true
+            if version_info["Sha"] == "unknown" then
+                local git_tool = find_tool("git")
+                if not git_tool then
+                    os.raise("error: git not find")
+                end
+                local sha, _ = os.iorunv(git_tool.program, {"rev-parse", "HEAD"})
+                local date, _ = os.iorunv(git_tool.program, {"log", "-1", "--date=format:%Y%m%d%H%M%S", "--format=%ad"})
+                version_info["Sha"] = string.format("%s@%s", sha:trim(), date:trim())
+            end
+        else
+            version_info["Installed"] = false
+        end
+    end
+
+    -- add to kind
+    if packageinstance:get("kind") then
+        return packageinstance:get("kind"), packagename, pkg
+    else
+        return "library", packagename, pkg
+    end
+end
+
 function dump_table()
     local packagelist = {toolchain = {}, library = {}}
     local repositories_dir = option.get("repositories")
     local installed_list = nil
+    local dump_type = option.get("dump")
 
-    -- load package xmake
-    for _, packagedir in ipairs(os.dirs(path.join(rootdir, "packages", "*", "*"))) do
-        local packagename = path.filename(packagedir)
-        local packagefile = path.join(packagedir, "xmake.lua")
-        local manifestfile = path.join(packagedir, "manifest.json")
-        local packageinstance = package.load_from_repository(packagename, packagedir, {packagefile = packagefile})
-        local on_load = packageinstance:get("load")
-        if on_load then
-            on_load(packageinstance)
+    if dump_type == "json" or dump_type == "table" then
+        -- load package xmake
+        for _, packagedir in ipairs(os.dirs(path.join(rootdir, "packages", "*", "*"))) do
+            local package_type, package_name, package_info = get_package_info(packagedir)
+            packagelist[package_type][package_name] = package_info
         end
-        local pkg = {}
-        local urls = packageinstance:get("urls") or os.raise("%s urls is empty", packagename)
-        local versions = packageinstance:get("versions") or {latest = "nil", sha256 = "unknown"}
-        local description = packageinstance:get("description") or "unknown"
-        local homepage = packageinstance:get("homepage") or "unknown"
-        local license = packageinstance:get("license") or "unknown"
-
-        if type(urls) == "table" then
-            pkg["urls"] = urls
+        if dump_type == "json" then
+            print(json.encode(packagelist))
         else
-            pkg["urls"] = {urls}
+            print(packagelist)
         end
-
-        pkg["description"] = description
-        pkg["homepage"] = homepage
-        pkg["license"] = license
-
-        if os.isfile(manifestfile) then
-            manifest = json.loadfile(manifestfile)
-            pkg["company"] = manifest["company"]
-            pkg["versions"] = manifest["versions"]
-        else
-            pkg["company"] = "unknown"
-            pkg["versions"] = {}
-        end
-
-        for version, version_info in pairs(pkg["versions"]) do
-            version_info["sha256"] = versions[version] or "unknown"
-            if is_installed(packagename, version) then
-                version_info["installed"] = true
-            else
-                version_info["installed"] = false
-            end
-        end
-
-        -- add to kind
-        if packageinstance:get("kind") then
-            packagelist[packageinstance:get("kind")][packagename] = pkg
-        else
-            packagelist["library"][packagename] = pkg
-        end
-    end
-
-    local value = option.get("dump")
-    if value == "json" then
-        print(json.encode(packagelist))
-    elseif value == "table" then
-        print(packagelist)
     else
-        assert(false, "invalid type \"%s\"", value)
+        local dump_package = ""
+        local list = dump_type:split("#")
+        assert(#list == 2, "invalid input \"%s\"", dump_type)
+        local dump_package = list[1]
+        dump_type = list[2]
+        local packagedir = path.join(rootdir, "packages", dump_package:sub(1, 1), dump_package)
+        local package_type, package_name, package_info = get_package_info(packagedir)
+        packagelist[package_type][package_name] = package_info
+
+        if dump_type == "json" then
+            print(json.encode(packagelist))
+        else
+            print(packagelist)
+        end
     end
 
     return packagelist
@@ -226,7 +256,7 @@ function install(packagename, version)
                     os.mv(tmp, outputdir)
                 end
             else
-                raise("unmatched checksum, current hash(%s) != original hash(%s)", sha256:sub(1, 8), sourcehash:sub(1, 8))
+                os.raise("unmatched checksum, current hash(%s) != original hash(%s)", sha256:sub(1, 8), sourcehash:sub(1, 8))
             end
         end
 
@@ -243,7 +273,7 @@ function install(packagename, version)
             packages_json[packagename][version].installed = true
             print("%s@%s install successful", packagename, version)
         else
-            raise("%s@%s install failed", packagename, version)
+            os.raise("%s@%s install failed", packagename, version)
         end
     else
         print("%s@%s already installed", packagename, version)
@@ -257,14 +287,21 @@ function update()
     local packagename = option.get("update")
     local repositories_dir = option.get("repositories")
     local installed = is_installed(packagename, "latest")
+    local git_tool = find_tool("git")
+    if not git_tool then
+        os.raise("error: git not find")
+    end
+
+    local url, _ = os.iorunv(git_tool.program, {"remote", "get-url", "origin"})
 
     -- update
     if installed then
         local outputdir = path.join(repositories_dir, packagename, "latest")
+        print("update form %s", url:trim())
         git.pull({repodir = outputdir})
         print("%s@%s update successful", packagename, "latest")
     else
-        print("%s@%s not yet installed", packagename, "latest")
+        os.raise("%s@%s not yet installed", packagename, "latest")
     end
 end
 
@@ -286,10 +323,10 @@ function uninstall(packagename, version)
             packages_json[packagename][version].installed = false
             print("%s@%s uninstall successful", packagename, version)
         else
-            raise("%s@%s uninstall failed", packagename, version)
+            os.raise("%s@%s uninstall failed", packagename, version)
         end
     else
-        print("%s@%s not yet installed", packagename, version)
+        os.raise("%s@%s not yet installed", packagename, version)
     end
 
     -- update packages.json

@@ -1,11 +1,11 @@
 {
-    "company": "Geehy",
-    "versions": {
+    "Company": "Geehy",
+    "Versions": {
         "latest": {
-            "size": 0
+            "Size": 0
         },
         "v0.0.1": {
-            "size": 14.8
+            "Size": 14.8
         }
     }
 }
