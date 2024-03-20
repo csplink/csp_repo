@@ -233,6 +233,7 @@ function install(packagename, version)
 
         if git.asgiturl(url) then
             -- git clone
+            print("git clone from %s", url)
             git.clone(url, {recursive = true, longpaths = true, outputdir = outputdir})
         else
             local pkg_file = path.join(repositories_dir, packagename, (path.filename(url):gsub("%?.+$", "")))
